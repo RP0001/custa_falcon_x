@@ -15,7 +15,12 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
+from django.conf.urls import include
+from custa import views
 
 urlpatterns = [
+    # Custa urls handled by custa application.
+    url(r'^custa/', include('custa.urls')),
+    url(r'^$', views.about, name='about'),
     url(r'^admin/', admin.site.urls),
 ]
