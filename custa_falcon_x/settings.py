@@ -134,3 +134,17 @@ MEDIA_ROOT = MEDIA_DIR
 MEDIA_URL = '/media/'
 
 LOGIN_URL = '/custa/login/'
+
+MAP_WIDGETS = {
+    "GoogleStaticMapWidget": (
+        ("zoom", 15),
+        ("size", "320x320"),
+    ),
+
+    "GoogleStaticMapMarkerSettings": (
+        ("size", "normal"),
+        ("color", "orange"),
+    ),
+    "LANGUAGE": "en",
+    "GOOGLE_MAP_API_KEY": "AIzaSyDBcAFDmXVrfK9dv4TmJYrKsJyziKh50jQ",
+}

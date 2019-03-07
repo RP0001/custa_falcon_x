@@ -1,12 +1,50 @@
 <!DOCTYPE html>
-{% extends 'custa/base.html' %}
-{% load staticfiles %}
-    {% block title_block %}
-        CUSTA_APP
-    {% endblock %}
+<html>
+  <head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <title>Simple Markers</title>
+    <style>
+      /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+      #map {
+        height: 400px;
+        width: 400px;
+      }
+      /* Optional: Makes the sample page fill the window. */
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="map"></div>
+    <script>
 
-{% block body_block %}
-    <div>
-    
-    </div>
-{% endblock %}
+      function initMap() {
+        var myLatLng = {lat: 55.873706, lng: -4.292585};
+
+        var map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 17,
+          center: myLatLng
+        });
+
+        var marker = new google.maps.Marker({
+          position: myLatLng,
+          map: map,
+          title: 'CUSTA'
+        });
+
+        var infowindow = new google.maps.InfoWindow({
+    content: contentString
+  });
+      }
+    </script>
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDBcAFDmXVrfK9dv4TmJYrKsJyziKh50jQ&callback=initMap">
+    </script>
+    <li><a href="{% url 'about' %}">About</a></li>
+  </body>
+</html>

@@ -13,6 +13,11 @@ def about(request):
     return render(request, 'custa/about.html')
 
 
+# Contact us page.
+def contact(request):
+    return render(request, 'custa/contact.html')
+
+
 # Register page.
 def register(request):
     registered = False
