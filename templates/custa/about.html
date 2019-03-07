@@ -1,8 +1,25 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>CUSTA_APP</title>
-</head>
-<body></body>
-</html>
+{% extends 'custa/base.html' %}
+{% load staticfiles %}
+    {% block title_block %}
+        CUSTA_APP
+    {% endblock %}
+
+{% block body_block %}
+    <div>
+    Definition:
+            CUSTA = customised pasta recipe
+    We are passionate about delivering you the tastiest custom-made handcrafted pasta.
+    Our determination and focus has made us Glasgow's leading custom pasta brand.
+    Since the inauguration of our first store in Boyd Orr we have sold almost 1 million CUSTAs.
+
+    CUSTAmising has never been easier.
+    With thousands of possible ingredient combinations, the choice is yours
+        - from preset to custom-made, from low-carb to desserts even!
+    Halal and Kosher CUSTAs included.
+
+    Want a new, special ingredient? - Send us an email and our CUSTA artisans will be on it.
+    In a hurry? - Get your order ready for pickup or directly delivered to your door by our couriers.
+    Say no to culinary monotomy - get a CUSTA!
+    </div>
+{% endblock %}

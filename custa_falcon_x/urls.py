@@ -20,7 +20,7 @@ from custa import views
 
 urlpatterns = [
     # Custa urls handled by custa application.
-    url(r'^custa/', include('custa.urls')),
     url(r'^$', views.about, name='about'),
+    url(r'^custa/', include('custa.urls')),
     url(r'^admin/', admin.site.urls),
 ]
