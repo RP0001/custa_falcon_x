@@ -1,0 +1,38 @@
+{% extends 'custa/base.html' %}
+{% load staticfiles %}
+
+{% block title_block %}
+    CUSTAmise
+{% endblock %}
+
+{% block body_block %}
+
+    </form>
+    <h1>CUSTAmise</h1>
+    <form id="custa_form" method="POST" action="{% url 'custamise' %}">
+    {% csrf_token %}
+        {{ custa_form.as_p }}
+{#        <div >#}
+{#            <input type="text" name="username" value="{{ request.user.username }}" required id="id_username">#}
+{#        </div>#}
+{#        <div>#}
+{#            <h2>Bases:</h2>#}
+{#            {{ custa_form.base_name }}#}
+{#        </div>#}
+{#        <div>#}
+{#            <h2>Sauces:</h2>#}
+{#            {{ custa_form.sauce_name }}#}
+{#        </div>#}
+{#        <div>#}
+{#            <h2>Tops:</h2>#}
+{#            {{ custa_form.top_name }}#}
+{#        </div>#}
+{#        <div>price:#}
+{#            <input type="number" name="price"  required id="id_price">#}
+{#        </div>#}
+{#        <div>custa name:#}
+{#            <input type="text" name="name" maxlength="128" required id="id_name">#}
+{#        </div>#}
+    <input type="submit" name="submit" value="create">
+    </form>
+{% endblock %}

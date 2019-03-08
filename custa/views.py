@@ -5,7 +5,10 @@ from django.contrib.auth import authenticate, login
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
-from custa.forms import UserForm, UserProfileForm
+from custa.forms import UserForm, UserProfileForm, CustaForm
+from custa.models import Base, Sauce, Top
+
+context_dict = {}
 
 
 # Index/about/home page.
@@ -16,6 +19,25 @@ def about(request):
 # Contact us page.
 def contact(request):
     return render(request, 'custa/contact.html')
+
+
+# Custamise page.
+def custamise(request):
+    user = request.user
+    bases = Base.objects.all()
+    sauces = Sauce.objects.all()
+    tops = Top.objects.all()
+    context_dict['bases'] = bases
+    context_dict['sauces'] = sauces
+    context_dict['tops'] = tops
+    if request.method == "POST":
+        custa_form = CustaForm(data=request.POST)
+        context_dict['custa_form'] = custa_form
+        if custa_form.is_valid():
+            custa_form.save(commit=True)
+
+    print(user.username)
+    return render(request, 'custa/custamise.html', context_dict)
 
 
 # Register page.
@@ -75,4 +97,3 @@ def restricted(request):
 def user_logout(request):
     logout(request)
     return HttpResponseRedirect(reverse('about'))
-

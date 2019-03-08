@@ -22,6 +22,7 @@ class Top(models.Model):
     def __str__(self):
         return self.name
 
+
 class Base(models.Model):
     # id primary key is by default
     name = models.CharField(max_length=char_field_max_length, unique=True)  # Unique base.
@@ -35,10 +36,10 @@ class Custa(models.Model):
     # id primary key is by default
     name = models.CharField(max_length=char_field_max_length, unique=True)
     price = models.IntegerField(default=0)
-    username = models.ForeignKey(User, on_delete=models.CASCADE)
-    base_name = models.OneToOneField(Base, on_delete=models.CASCADE)
-    sauce_name = models.OneToOneField(Sauce, on_delete=models.CASCADE)
-    top_name = models.OneToOneField(Top, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, unique=False)
+    base = models.ForeignKey(Base, on_delete=models.CASCADE, unique=False)
+    sauce = models.ForeignKey(Sauce, on_delete=models.CASCADE, unique=False)
+    top = models.ForeignKey(Top, on_delete=models.CASCADE, unique=False)
 
     def __str__(self):
         return self.name
@@ -60,4 +61,4 @@ class Order(models.Model):
     # id primary key is by default
     date = models.DateField(null=False)  # Must provide Date Field.
     order_details = models.CharField(max_length=char_field_max_length, null=False)  # Must provide order details.
-    username = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
