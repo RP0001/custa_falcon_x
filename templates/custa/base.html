@@ -1,29 +1,51 @@
 <!DOCTYPE html>
 {% load staticfiles %}
+
+<!--CSS-->
+<link rel="stylesheet" type="text/css" href={% static 'css/custa.css' %}>
 <head>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="{% static 'css/materializeModified.css' %}" type="text/css" rel="stylesheet" media="screen,projection"/>
+    <link rel="shortcut icon" href={% static 'assets/favicon.ico' %}/>
     <title>
         {% block title_block %}
-            CUSTA_APP
+            CUSTA
         {% endblock %}
     </title>
-{#    <link rel="stylesheet" href="{% static "layui/css/layui.css" %}">#}
 </head>
-<body>
-<div>
+
+<div class="header">
+    <img src={% static 'assets/logo_transparent.png' %} alt="logo"/>
+<a class="active" href="#home">About</a>
+<a href="#news">Custamise</a>
+<a href="#contact">Order</a>
+    <ul>
+        {% if user.is_authenticated %}
+
+            <li><a href="{% url 'logout' %}">Logout</a></li>
+        {% else %}
+            <li><a href="{% url 'login' %}">Login</a></li>
+            <li><a href="{% url 'register' %}">Register</a></li>
+        {% endif %}
+        <li><a href="{% url 'contact' %}">Contact</a></li>
+    </ul>
+</div>
+<div class="hero-image">
+    <div class="hero-text">
+        <h1>Your Gateway to Custom Pasta &copy;</h1>
+    </div>
+</div>
+<body class=body_text_1>
+<script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-1.9.0.min.js"></script>
+<script src="{% static "js/materialize.js" %}"></script>
+<div class="container">
     {% block body_block %}
     {% endblock %}
 </div>
-<div>
-    <ul>
-    {% if user.is_authenticated %}
-        You are signed in as {{ request.user.username }}.
-        <li><a href="{% url 'logout' %}">Logout</a></li>
-    {% else %}
-        <li><a href="{% url 'login' %}">Sign In</a></li>
-        <li><a href="{% url 'register' %}">Sign Up</a></li>
-    {% endif %}
-    <li><a href="{% url 'contact' %}">Contact Us</a></li>
-    </ul>
-</div>
 </body>
+
+<div class="footer-image">
+    <p>You are signed in as {{ request.user.username }}.</p>
+</div>
+
 </html>

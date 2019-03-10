@@ -1,3 +1,5 @@
+from itertools import chain
+
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect
@@ -6,7 +8,7 @@ from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
 from custa.forms import UserForm, UserProfileForm, CustaForm
-from custa.models import Base, Sauce, Top
+from custa.models import Base, Sauce, Top, Custa
 
 context_dict = {}
 
@@ -27,9 +29,15 @@ def custamise(request):
     bases = Base.objects.all()
     sauces = Sauce.objects.all()
     tops = Top.objects.all()
+    bases_list = list(bases.values())
+    sauces_list = list(sauces.values())
+    tops_list = list(tops.values())
     context_dict['bases'] = bases
+    context_dict['bases_list'] = bases_list
     context_dict['sauces'] = sauces
+    context_dict['sauces_list'] = sauces_list
     context_dict['tops'] = tops
+    context_dict['tops_list'] = tops_list
     if request.method == "POST":
         custa_form = CustaForm(data=request.POST)
         context_dict['custa_form'] = custa_form
@@ -38,6 +46,15 @@ def custamise(request):
 
     print(user.username)
     return render(request, 'custa/custamise.html', context_dict)
+
+
+def order(request):
+    user = request.user
+    precustas = Custa.objects.filter(user=0)
+    usercustas = Custa.objects.filter(user=user)
+    custas_list = list(chain(precustas, usercustas))
+    context_dict['custa_list'] = custas_list
+    return render(request, 'custa/order.html', context_dict)
 
 
 # Register page.

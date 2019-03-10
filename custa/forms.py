@@ -4,6 +4,7 @@ from django.forms import RadioSelect, TextInput
 
 from custa.models import UserProfile, Custa
 
+
 class UserForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput())
 
@@ -19,7 +20,6 @@ class UserProfileForm(forms.ModelForm):
 
 
 class CustaForm(forms.ModelForm):
-
     class Meta:
         model = Custa
         fields = ('name', 'price', 'user', 'base', 'sauce', 'top')
@@ -27,5 +27,7 @@ class CustaForm(forms.ModelForm):
             'base': RadioSelect,
             'sauce': RadioSelect,
             'top': RadioSelect,
+            'user': TextInput,
         }
+
 

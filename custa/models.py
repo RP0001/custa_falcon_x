@@ -59,6 +59,12 @@ class UserProfile(models.Model):
 
 class Order(models.Model):
     # id primary key is by default
-    date = models.DateField(null=False)  # Must provide Date Field.
-    order_details = models.CharField(max_length=char_field_max_length, null=False)  # Must provide order details.
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=False)
+    time = models.DateTimeField(auto_now_add=True, null=True)
+
+
+class OrderCusta(models.Model):
+    # id primary key is by default
+    order = models.ForeignKey(Order, on_delete=models.CASCADE, unique=False)
+    custa = models.ForeignKey(Custa, on_delete=models.CASCADE, unique=False)
+    quantity = models.IntegerField(null=False)  # Must provide a quantity
