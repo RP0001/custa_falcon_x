@@ -1,4 +1,6 @@
+import json
 from itertools import chain
+
 
 from django.shortcuts import render
 from django.http import HttpResponse
@@ -8,7 +10,7 @@ from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
 from custa.forms import UserForm, UserProfileForm, CustaForm
-from custa.models import Base, Sauce, Top, Custa
+from custa.models import Base, Sauce, Top, Custa, Order, OrderCusta
 
 context_dict = {}
 
@@ -42,7 +44,9 @@ def custamise(request):
         custa_form = CustaForm(data=request.POST)
         context_dict['custa_form'] = custa_form
         if custa_form.is_valid():
-            custa_form.save(commit=True)
+            custa = custa_form.save(commit=False)
+            custa.user = user
+            custa.save()
 
     print(user.username)
     return render(request, 'custa/custamise.html', context_dict)
@@ -57,6 +61,19 @@ def order(request):
     return render(request, 'custa/order.html', context_dict)
 
 
+def checkout(request):
+    data = json.loads(request.body)
+    id_array = data.get('idArray')
+    quantity_array = data.get('quantityArray')
+    is_delivery_received = data.get('isDelivery')
+    total_received = data.get('total') * 100
+    new_order = Order(user=request.user, is_delivery=is_delivery_received, total=total_received)
+    new_order.save()
+    for i in range(0, len(id_array)):
+        OrderCusta.objects.create(quantity=quantity_array[i], custa_id=id_array[i], order=new_order)
+    return HttpResponse(json.dumps({"haha": "SS"}))
+
+
 # Register page.
 def register(request):
     registered = False
@@ -69,8 +86,6 @@ def register(request):
             user.save()
             profile = profile_form.save(commit=False)
             profile.user = user
-            # if 'picture' in request.FILES:
-            #     profile.picture = request.FILES['picture']
             profile.save()
             registered = True
         else:

@@ -9,11 +9,6 @@
     <h1>CUSTAmise</h1>
     <form id="custa_form" method="POST" action="{% url 'custamise' %}">
         {% csrf_token %}
-        {#        {{ custa_form.as_p }}#}
-        <div>
-            <input type="text" style="display: none" name="user" value="{{ request.user.id }}" required id="id_user" readonly>
-        </div>
-
         <div class="card-panel hoverable">
             <ul class="collapsible popout">
                 <li class="active">

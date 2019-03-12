@@ -6,15 +6,199 @@
 {% endblock %}
 
 {% block body_block %}
-{#    <h1>Order</h1>#}
-{#    <div>#}
-{#    {% for custa in custa_list %}#}
-{#        <p>{{ custa.name }}</p>#}
-{#    {% endfor %}#}
-{##}
-{#    </div>#}
-    <ul class="collection with-header">
-        <li class="collection-header"><h4>Order</h4></li>
-    </ul>
+    {#    <h1>Order</h1>#}
+    {#    <div>#}
+    {#    {% for custa in custa_list %}#}
+    {#        <p>{{ custa.name }}</p>#}
+    {#    {% endfor %}#}
+    {##}
+    {#    </div>#}
+    {#    <ul class="collection with-header">#}
+    {#        <li class="collection-header"><h4>Your CUSTAs</h4></li>#}
+    {#        {% for custa in custa_list %}#}
+    {#            <li class="collection-item">#}
+    {#                #}
+    {#            </li>#}
+    {#        {% endfor %}#}
+    {##}
+    {#    </ul>#}
+    <table class="highlight centered striped">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Base</th>
+            <th>Sauce</th>
+            <th>Top</th>
+            <th>Price</th>
+            <th>Quantity</th>
+        </tr>
+        </thead>
 
+        <tbody>
+        {% for custa in custa_list %}
+            <tr>
+                <td id="custa_{{ custa.id }}_name">{{ custa.name }}</td>
+                <td>{{ custa.base.name }}</td>
+                <td>{{ custa.sauce.name }}</td>
+                <td>{{ custa.top.name }}</td>
+                <td><span id="id_custa_{{ custa.id }}_price"></span></td>
+                <script>
+                    $("#id_custa_{{ custa.id }}_price").text("£" + ({{ custa.price }}) / 100);
+                </script>
+                <td>
+                    <a class="btn-floating waves-effect btn-small waves-light red" style="z-index: 0"><i class="material-icons"
+                                                                                      onclick="decrease('id_custa_{{ custa.id }}_quantity')">remove</i></a>
+                    <input name="quantity" type="text" style="width: 50px; text-align: center;font-size: 28px"
+                           id="id_custa_{{ custa.id }}_quantity" readonly value="0">
+                    <a class="btn-floating waves-effect btn-small waves-light red" style="z-index: 0"><i class="material-icons"
+                                                                                      onclick="increase('id_custa_{{ custa.id }}_quantity')">add</i></a>
+                </td>
+            </tr>
+        {% endfor %}
+
+        </tbody>
+    </table>
+    {% csrf_token %}
+    <a class="waves-effect waves-light btn modal-trigger" href="#modal1">Modal</a>
+    <div id="modal1" class="modal">
+        <div class="modal-content">
+            <h4>Confirm Your Order</h4>
+            <p>A bunch of text</p>
+        </div>
+        <div class="modal-footer">
+            <a href="#!" class="modal-close waves-effect waves-green btn-flat">Agree</a>
+        </div>
+    </div>
+    <div class="col hide-on-small-only m3 xl3 offset-xl1">
+        <div class="toc-wrapper pinned" style="top: 20%;right: 3%">
+            <div class="card-panel hoverable" style="background-color: #f1f1f1">
+                <div class="switch center-align">
+                    <label style="font-size: 1.5rem">
+                        Pickup
+                        <input type="checkbox" id="id_is_delivery" onclick="update()">
+                        <span class="lever"></span>
+                        Delivery
+                    </label>
+                </div>
+                <div>
+                    <br>
+                    <table class="highlight centered" style="overflow-y: scroll;display: list-item;max-height: 430px;min-height: 200px">
+                        <thead>
+                        <th>Name</th>
+                        <th>Price</th>
+                        <th>Quantity</th>
+                        </thead>
+                        <tbody id="cart"></tbody>
+                    </table>
+                </div>
+                <div><h5 id="total_price" style="text-align: right">Total: £0.00</h5></div>
+                <div class="center-align">
+                    <br>
+                    <button class="btn-large waves-effect waves-light" onclick="checkout()">Go To ;Checkout</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
+    <script>
+        M.AutoInit();
+        var csrftoken = Cookies.get('csrftoken');
+
+        function csrfSafeMethod(method) {
+            // these HTTP methods do not require CSRF protection
+            return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+        }
+
+        $.ajaxSetup({
+            beforeSend: function (xhr, settings) {
+                if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                    xhr.setRequestHeader("X-CSRFToken", csrftoken);
+                }
+            }
+        });
+        var idArr;
+        var qttArr;
+        var isDelivery;
+        var total = 0;
+        function update() {
+            total = 0;
+            var quantity_inputs = document.getElementsByName('quantity');
+            idArr = [];
+            qttArr = [];
+            for (var i = 0; i < quantity_inputs.length; i++) {
+                var curr = quantity_inputs[i];
+                if (curr.value !== '0') {
+                    var custa_index = curr.id.substring(9,(curr.id.length-9));
+                    var quantity = curr.value;
+                    idArr.push(custa_index);
+                    qttArr.push(quantity);
+                }
+            }
+            isDelivery = document.getElementById("id_is_delivery").checked;
+            $("#cart").children().remove();     //remove all chidren first
+            $("#total_price").text("");
+            for (var i = 0; i < idArr.length; i++) {
+                var custaname = document.createElement("td");
+                custaname.innerText = $("#custa_" + idArr[i] + "_name").text();
+                var custaprice = document.createElement("td");
+                var custaqtt = document.createElement("td");
+                custaqtt.innerText = $("#id_custa_" + idArr[i] + "_quantity").val();
+                custaprice.innerText = "£"+(parseFloat($("#id_custa_" + idArr[i] + "_price").text().substring(1)) * parseInt(custaqtt.innerText)).toFixed(2);
+                total += parseFloat($("#id_custa_" + idArr[i] + "_price").text().substring(1)) * parseInt(custaqtt.innerText);
+                var trEle = document.createElement("tr");
+                trEle.append(custaname);
+                trEle.append(custaprice);
+                trEle.append(custaqtt);
+                $("#cart").append(trEle);
+            }
+            if(isDelivery && total!==0)
+                total+=2;
+            var totalStr = "Total: £" + total.toFixed(2);
+            $("#total_price").text(totalStr);
+        }
+
+        function checkout() {
+            update();
+            var obj = {};
+            obj.idArray = idArr;
+            obj.quantityArray = qttArr;
+            obj.isDelivery = isDelivery;
+            obj.total = total;
+            var jsonStr = JSON.stringify(obj);
+            console.log(jsonStr);
+            if (total!==0) {
+                $.ajax({
+                    type: "post",
+                    url: '../checkout/',
+                    data: jsonStr,
+                    dataType: 'json',
+                });
+            }
+        }
+
+        function increase(textID) {
+            var ele = $("#" + textID);
+            var ele_num = ele.val();
+            ele.val(ele_num * 1 + 1);
+            update();
+        }
+
+        function decrease(textID) {
+            var ele = $("#" + textID);
+            var ele_num = ele.val();
+            if (ele_num > 0) {
+                ele.val(ele_num * 1 - 1);
+            }
+            update();
+        }
+    </script>
+    <style>
+        table.highlight > tbody > tr:hover {
+            background-color: #eeeaea;
+        }
+
+    </style>
 {% endblock %}

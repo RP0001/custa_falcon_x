@@ -61,6 +61,8 @@ class Order(models.Model):
     # id primary key is by default
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=False)
     time = models.DateTimeField(auto_now_add=True, null=True)
+    is_delivery = models.BooleanField(default=False)
+    total = models.IntegerField(default=0, null=False)
 
 
 class OrderCusta(models.Model):

@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth.models import User
 from django.forms import RadioSelect, TextInput
 
-from custa.models import UserProfile, Custa
+from custa.models import UserProfile, Custa, Order, OrderCusta
 
 
 class UserForm(forms.ModelForm):
@@ -22,12 +22,19 @@ class UserProfileForm(forms.ModelForm):
 class CustaForm(forms.ModelForm):
     class Meta:
         model = Custa
-        fields = ('name', 'price', 'user', 'base', 'sauce', 'top')
+        fields = ('name', 'price', 'base', 'sauce', 'top')
         widgets = {
             'base': RadioSelect,
             'sauce': RadioSelect,
             'top': RadioSelect,
-            'user': TextInput,
         }
 
 
+class OrderForm(forms.ModelForm):
+    class Meta:
+        model = Order
+        fields = ('is_delivery', 'total')
+
+
+# class OrderCustaForm(forms.ModelForm):
+#     clas

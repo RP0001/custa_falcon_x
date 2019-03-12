@@ -9,5 +9,6 @@ urlpatterns = [
     url(r'^contact/$', views.contact, name='contact'),
     url(r'^custamise/$', views.custamise, name='custamise'),
     url(r'^order/$', views.order, name='order'),
+    url(r'^checkout/$', views.checkout),
 ]
 
