@@ -24,11 +24,7 @@
                                         <label for="id_base_{{ base.id }}">
                                             {{ base.name }} &emsp;£<span id="id_base_{{ base.id }}_price"></span>
                                         </label></li>
-                                    <script>
-                                        var price = {{ base.price }};
-                                        var realPrice = price / 100;
-                                        $("#id_base_{{ base.id }}_price").html(realPrice);
-                                    </script>
+                                    <script>var price = {{ base.price }};var realPrice = price / 100;$("#id_base_{{ base.id }}_price").html(realPrice);</script>
                                 {% endfor %}
                                 <li>
                                     <div class="row">
@@ -54,11 +50,7 @@
                                         <label for="id_sauce_{{ sauce.id }}">
                                             {{ sauce.name }} &emsp;£<span id="id_sauce_{{ sauce.id }}_price"></span>
                                         </label></li>
-                                    <script>
-                                        var price = {{ sauce.price }};
-                                        var realPrice = price / 100;
-                                        $("#id_sauce_{{ sauce.id }}_price").html(realPrice);
-                                    </script>
+                                    <script>var price = {{ sauce.price }};var realPrice = price / 100;$("#id_sauce_{{ sauce.id }}_price").html(realPrice);</script>
                                 {% endfor %}
                                 <li>
                                     <div class="row">
@@ -84,11 +76,7 @@
                                         <label for="id_top_{{ top.id }}">
                                             {{ top.name }} &emsp;£<span id="id_top_{{ top.id }}_price"></span>
                                         </label></li>
-                                    <script>
-                                        var price = {{ top.price }};
-                                        var realPrice = price / 100;
-                                        $("#id_top_{{ top.id }}_price").html(realPrice);
-                                    </script>
+                                    <script>var price = {{ top.price }};var realPrice = price / 100;$("#id_top_{{ top.id }}_price").html(realPrice);</script>
                                 {% endfor %}
                                 <li>
                                     <div class="row">
@@ -117,83 +105,8 @@
             <input class="btn-large waves-effect waves-light" type="submit" name="submit" value="create">
         </div>
     </form>
+    <script src="{% static "js/custamise.js" %}"></script>
     <script>
-        M.AutoInit();
-        function calcTotal() {
-            var selected_base_id = $("input[name='base']:checked").val();
-            var baseList = {{ bases_list|safe }};
-            var basePrice;
-            $("#id_tags").html("");
-            if (selected_base_id !== undefined) {
-                basePrice = (baseList[selected_base_id - 1].price) / 100;
-                var basetag = "<div class='chip'>"+ baseList[selected_base_id-1].name +"</div>";
-                $("#id_tags").append(basetag);
-            } else {
-                basePrice = 0;
-            }
-            var selected_sauce_id = $("input[name='sauce']:checked").val();
-            var sauceList = {{ sauces_list|safe }};
-            var saucePrice;
-            if (selected_sauce_id !== undefined) {
-                saucePrice = (sauceList[selected_sauce_id - 1].price) / 100;
-                var saucetag = "<div class='chip'>"+ sauceList[selected_sauce_id-1].name +"</div>";
-                $("#id_tags").append(saucetag);
-            }
-            else
-                saucePrice = 0;
-            var selected_top_id = $("input[name='top']:checked").val();
-            var topList = {{ tops_list|safe }};
-            var topPrice;
-            if (selected_top_id !== undefined) {
-                topPrice = (topList[selected_top_id - 1].price) / 100;
-                var toptag = "<div class='chip'>"+ topList[selected_top_id-1].name +"</div>";
-                $("#id_tags").append(toptag);
-            }
-            else
-                topPrice = 0;
-            var total = basePrice + saucePrice + topPrice;
-            $("#id_price").val(total*100);
-            $("#price_label").html("Price: £ " + total.toFixed(2));
-        }
-        
-        function openSection(index) {
-            $('.collapsible').collapsible('open', index);
-        }
-
-        function nextSection(index) {
-            var checked = false;
-            var type;
-            if(index===0){
-                type = "base";
-            }else if(index===1){
-                type = "sauce";
-            }else{
-                type = "top";
-            }
-            var radios = document.getElementsByName(type);
-            for(var i=0; i<radios.length; i++){
-                checked = checked || radios[i].checked;
-            }
-            if(!checked){
-                M.toast({html: 'please select a ' + type});
-            }else{
-                if(index===2){
-                    document.getElementById('id_name').focus();
-                }else{
-                    openSection(index+1);
-                }
-            }
-        }
-
+        var baseList = {{ bases_list|safe }};var sauceList = {{ sauces_list|safe }};var topList = {{ tops_list|safe }};
     </script>
-
-    <style>
-        .input-field label{
-            font-size: 2.2rem;
-        }
-    .input-field label.active{
-        font-size: 1.5rem;
-    }
-    </style>
-
 {% endblock %}

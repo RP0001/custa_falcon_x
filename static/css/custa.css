@@ -145,3 +145,18 @@ ul {
     padding-left: 25%;
     padding-right: 25%;
 }
+
+.input-field label{
+    font-size: 2.2rem;
+}
+
+.input-field label.active{
+    font-size: 1.5rem;
+}
+
+table.highlight > tbody > tr:hover {
+    background-color: #eeeaea;
+}
+.big-font{
+    font-size: 2rem;
+}

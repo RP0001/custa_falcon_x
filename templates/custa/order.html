@@ -59,18 +59,28 @@
         </tbody>
     </table>
     {% csrf_token %}
-    <a class="waves-effect waves-light btn modal-trigger" href="#modal1">Modal</a>
-    <div id="modal1" class="modal">
-        <div class="modal-content">
+    <div id="modal1" class="modal" style="max-height: 90%">
+        <div class="modal-content" id="modal1_content">
             <h4>Confirm Your Order</h4>
-            <p>A bunch of text</p>
+            <h5>Order Details</h5>
+            <div class="card-panel">
+                <table class="highlight striped" style="overflow-y: scroll;max-height: 830px;">
+                        <thead>
+                        <th>Name</th>
+                        <th>Price</th>
+                        <th>Quantity</th>
+                        </thead>
+                        <tbody id="order_details"></tbody>
+                    </table>
+                <div id="total_in_confirm_page" style="text-align: right"></div>
+            </div>
         </div>
-        <div class="modal-footer">
-            <a href="#!" class="modal-close waves-effect waves-green btn-flat">Agree</a>
+        <div class="modal-footer" id="modal_footer">
+            <button onclick="checkout()" class="btn-large waves-effect" style="right: 20px">Checkout</button>
         </div>
     </div>
     <div class="col hide-on-small-only m3 xl3 offset-xl1">
-        <div class="toc-wrapper pinned" style="top: 20%;right: 3%">
+        <div class="toc-wrapper pinned" style="top: 20%;right: 0%">
             <div class="card-panel hoverable" style="background-color: #f1f1f1">
                 <div class="switch center-align">
                     <label style="font-size: 1.5rem">
@@ -94,7 +104,7 @@
                 <div><h5 id="total_price" style="text-align: right">Total: £0.00</h5></div>
                 <div class="center-align">
                     <br>
-                    <button class="btn-large waves-effect waves-light" onclick="checkout()">Go To ;Checkout</button>
+                    <a class="waves-effect waves-light btn-large modal-trigger" href="#modal1" id="goto_checkout" disabled>Go To Checkout</a>
                 </div>
             </div>
         </div>
@@ -103,102 +113,5 @@
 
     </script>
     <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
-    <script>
-        M.AutoInit();
-        var csrftoken = Cookies.get('csrftoken');
-
-        function csrfSafeMethod(method) {
-            // these HTTP methods do not require CSRF protection
-            return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
-        }
-
-        $.ajaxSetup({
-            beforeSend: function (xhr, settings) {
-                if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
-                    xhr.setRequestHeader("X-CSRFToken", csrftoken);
-                }
-            }
-        });
-        var idArr;
-        var qttArr;
-        var isDelivery;
-        var total = 0;
-        function update() {
-            total = 0;
-            var quantity_inputs = document.getElementsByName('quantity');
-            idArr = [];
-            qttArr = [];
-            for (var i = 0; i < quantity_inputs.length; i++) {
-                var curr = quantity_inputs[i];
-                if (curr.value !== '0') {
-                    var custa_index = curr.id.substring(9,(curr.id.length-9));
-                    var quantity = curr.value;
-                    idArr.push(custa_index);
-                    qttArr.push(quantity);
-                }
-            }
-            isDelivery = document.getElementById("id_is_delivery").checked;
-            $("#cart").children().remove();     //remove all chidren first
-            $("#total_price").text("");
-            for (var i = 0; i < idArr.length; i++) {
-                var custaname = document.createElement("td");
-                custaname.innerText = $("#custa_" + idArr[i] + "_name").text();
-                var custaprice = document.createElement("td");
-                var custaqtt = document.createElement("td");
-                custaqtt.innerText = $("#id_custa_" + idArr[i] + "_quantity").val();
-                custaprice.innerText = "£"+(parseFloat($("#id_custa_" + idArr[i] + "_price").text().substring(1)) * parseInt(custaqtt.innerText)).toFixed(2);
-                total += parseFloat($("#id_custa_" + idArr[i] + "_price").text().substring(1)) * parseInt(custaqtt.innerText);
-                var trEle = document.createElement("tr");
-                trEle.append(custaname);
-                trEle.append(custaprice);
-                trEle.append(custaqtt);
-                $("#cart").append(trEle);
-            }
-            if(isDelivery && total!==0)
-                total+=2;
-            var totalStr = "Total: £" + total.toFixed(2);
-            $("#total_price").text(totalStr);
-        }
-
-        function checkout() {
-            update();
-            var obj = {};
-            obj.idArray = idArr;
-            obj.quantityArray = qttArr;
-            obj.isDelivery = isDelivery;
-            obj.total = total;
-            var jsonStr = JSON.stringify(obj);
-            console.log(jsonStr);
-            if (total!==0) {
-                $.ajax({
-                    type: "post",
-                    url: '../checkout/',
-                    data: jsonStr,
-                    dataType: 'json',
-                });
-            }
-        }
-
-        function increase(textID) {
-            var ele = $("#" + textID);
-            var ele_num = ele.val();
-            ele.val(ele_num * 1 + 1);
-            update();
-        }
-
-        function decrease(textID) {
-            var ele = $("#" + textID);
-            var ele_num = ele.val();
-            if (ele_num > 0) {
-                ele.val(ele_num * 1 - 1);
-            }
-            update();
-        }
-    </script>
-    <style>
-        table.highlight > tbody > tr:hover {
-            background-color: #eeeaea;
-        }
-
-    </style>
+    <script src="{% static "js/order.js" %}"></script>
 {% endblock %}

@@ -16,9 +16,9 @@
 
 <div class="header">
     <img src={% static 'assets/logo_transparent.png' %} alt="logo"/>
-<a class="active" href="#home">About</a>
-<a href="#news">Custamise</a>
-<a href="#contact">Order</a>
+
+
+
     <ul>
         {% if user.is_authenticated %}
 
@@ -28,6 +28,9 @@
             <li><a href="{% url 'register' %}">Register</a></li>
         {% endif %}
         <li><a href="{% url 'contact' %}">Contact</a></li>
+    <a href="{% url 'order' %}">Order</a>
+        <a href="{% url 'custamise' %}">Custamise</a>
+        <a class="active" href="{% url 'about' %}">About</a>
     </ul>
 </div>
 <span style = "position:relative; top:-32px;">

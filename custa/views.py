@@ -1,7 +1,6 @@
 import json
 from itertools import chain
 
-
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect
@@ -25,6 +24,7 @@ def contact(request):
     return render(request, 'custa/contact.html')
 
 
+@login_required
 # Custamise page.
 def custamise(request):
     user = request.user
@@ -52,6 +52,7 @@ def custamise(request):
     return render(request, 'custa/custamise.html', context_dict)
 
 
+@login_required
 def order(request):
     user = request.user
     precustas = Custa.objects.filter(user=0)
@@ -61,6 +62,7 @@ def order(request):
     return render(request, 'custa/order.html', context_dict)
 
 
+@login_required
 def checkout(request):
     data = json.loads(request.body)
     id_array = data.get('idArray')

@@ -1,5 +1,11 @@
 <!DOCTYPE html>
+{% extends 'custa/base.html' %}
+{% load staticfiles %}
+{% block title_block %}
+{% endblock %}
+
 <html>
+    {% block body_block %}
   <head>
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <meta charset="utf-8">
@@ -19,8 +25,20 @@
       }
     </style>
   </head>
-  <body>
-    <div id="map"></div>
+
+
+    <div id="map" style="float: initial">
+
+    </div>
+            <div><b>Contact Details</b></br>
+        Email: contact@custa.com</br>
+        Phone: 0740 333 2111</br>
+        Social Media: https://www.facebook.com/custa/
+            </div>
+        <div></br><b>Opening Hours:</b></br>
+            Mon - Fri 9 AM - 11 PM</br>
+            Sat - Sun 10 AM - 11 PM
+            </div>
     <script>
 
       function initMap() {
@@ -45,6 +63,5 @@
     <script async defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDBcAFDmXVrfK9dv4TmJYrKsJyziKh50jQ&callback=initMap">
     </script>
-    <li><a href="{% url 'about' %}">About</a></li>
-  </body>
+{% endblock %}
 </html>
