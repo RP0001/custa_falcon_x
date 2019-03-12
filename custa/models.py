@@ -34,7 +34,7 @@ class Base(models.Model):
 
 class Custa(models.Model):
     # id primary key is by default
-    name = models.CharField(max_length=char_field_max_length, unique=True)
+    name = models.CharField(max_length=char_field_max_length, unique=False)
     price = models.IntegerField(default=0)
     user = models.ForeignKey(User, on_delete=models.CASCADE, unique=False)
     base = models.ForeignKey(Base, on_delete=models.CASCADE, unique=False)
