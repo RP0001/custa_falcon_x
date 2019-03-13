@@ -1,11 +1,12 @@
 M.AutoInit();
+
 function calcTotal() {
     var selected_base_id = $("input[name='base']:checked").val();
     var basePrice;
     $("#id_tags").html("");
     if (selected_base_id !== undefined) {
         basePrice = (baseList[selected_base_id - 1].price) / 100;
-        var basetag = "<div class='chip'>"+ baseList[selected_base_id-1].name +"</div>";
+        var basetag = "<div class='chip'>" + baseList[selected_base_id - 1].name + "</div>";
         $("#id_tags").append(basetag);
     } else {
         basePrice = 0;
@@ -14,22 +15,20 @@ function calcTotal() {
     var saucePrice;
     if (selected_sauce_id !== undefined) {
         saucePrice = (sauceList[selected_sauce_id - 1].price) / 100;
-        var saucetag = "<div class='chip'>"+ sauceList[selected_sauce_id-1].name +"</div>";
+        var saucetag = "<div class='chip'>" + sauceList[selected_sauce_id - 1].name + "</div>";
         $("#id_tags").append(saucetag);
-    }
-    else
+    } else
         saucePrice = 0;
     var selected_top_id = $("input[name='top']:checked").val();
     var topPrice;
     if (selected_top_id !== undefined) {
         topPrice = (topList[selected_top_id - 1].price) / 100;
-        var toptag = "<div class='chip'>"+ topList[selected_top_id-1].name +"</div>";
+        var toptag = "<div class='chip'>" + topList[selected_top_id - 1].name + "</div>";
         $("#id_tags").append(toptag);
-    }
-    else
+    } else
         topPrice = 0;
     var total = basePrice + saucePrice + topPrice;
-    $("#id_price").val(total*100);
+    $("#id_price").val(total * 100);
     $("#price_label").html("Price: £ " + total.toFixed(2));
 }
 
@@ -40,24 +39,24 @@ function openSection(index) {
 function nextSection(index) {
     var checked = false;
     var type;
-    if(index===0){
+    if (index === 0) {
         type = "base";
-    }else if(index===1){
+    } else if (index === 1) {
         type = "sauce";
-    }else{
+    } else {
         type = "top";
     }
     var radios = document.getElementsByName(type);
-    for(var i=0; i<radios.length; i++){
+    for (var i = 0; i < radios.length; i++) {
         checked = checked || radios[i].checked;
     }
-    if(!checked){
+    if (!checked) {
         M.toast({html: 'please select a ' + type});
-    }else{
-        if(index===2){
+    } else {
+        if (index === 2) {
             document.getElementById('id_name').focus();
-        }else{
-            openSection(index+1);
+        } else {
+            openSection(index + 1);
         }
     }
 }

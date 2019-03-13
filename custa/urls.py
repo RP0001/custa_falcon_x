@@ -11,4 +11,3 @@ urlpatterns = [
     url(r'^order/$', views.order, name='order'),
     url(r'^checkout/$', views.checkout),
 ]
-

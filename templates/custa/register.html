@@ -6,19 +6,19 @@
 {% endblock %}
 
 {% block body_block %}
-{#    <script src="{% static "layui/layui.js" %}"></script>#}
+    {#    <script src="{% static "layui/layui.js" %}"></script>#}
     <h1>REGISTER</h1>
     {% if registered %}
         YOU ARE REGISTERED.
-        <a href="{% url 'about' %}">Return to the homepage.</a><br />
+        <a href="{% url 'about' %}">Return to the homepage.</a><br/>
     {% else %}
         REGISTER HERE:
         <form id="user_form" class="layui-form" method="post" action="{% url 'register' %}"
-            enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ user_form.as_p }}
-        {{ profile_form.as_p }}
-        <input type="submit" class="layui-btn" name="submit" value="Register" />
+              enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ user_form.as_p }}
+            {{ profile_form.as_p }}
+            <input type="submit" class="layui-btn" name="submit" value="Register"/>
         </form>
         <script>
 

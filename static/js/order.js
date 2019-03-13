@@ -17,6 +17,7 @@ var idArr;
 var qttArr;
 var isDelivery;
 var total = 0;
+
 function update() {
     total = 0;
     var quantity_inputs = document.getElementsByName('quantity');
@@ -26,7 +27,7 @@ function update() {
     for (var i = 0; i < quantity_inputs.length; i++) {
         var curr = quantity_inputs[i];
         if (curr.value !== '0') {
-            var custa_index = curr.id.substring(9,(curr.id.length-9));
+            var custa_index = curr.id.substring(9, (curr.id.length - 9));
             var quantity = curr.value;
             idArr.push(custa_index);
             qttArr.push(quantity);
@@ -43,7 +44,7 @@ function update() {
         var custaprice = document.createElement("td");
         var custaqtt = document.createElement("td");
         custaqtt.innerText = $("#id_custa_" + idArr[i] + "_quantity").val();
-        custaprice.innerText = "£"+(parseFloat($("#id_custa_" + idArr[i] + "_price").text().substring(1)) * parseInt(custaqtt.innerText)).toFixed(2);
+        custaprice.innerText = "£" + (parseFloat($("#id_custa_" + idArr[i] + "_price").text().substring(1)) * parseInt(custaqtt.innerText)).toFixed(2);
         total += parseFloat($("#id_custa_" + idArr[i] + "_price").text().substring(1)) * parseInt(custaqtt.innerText);
         var trEle = document.createElement("tr");
         trEle.append(custaname);
@@ -53,22 +54,22 @@ function update() {
         var trEle_cloned = trEle.cloneNode(true);
         $("#order_details").append(trEle_cloned);
     }
-    if(isDelivery && total!==0)
-        total+=2;
+    if (isDelivery && total !== 0)
+        total += 2;
     var totalStr = "Total: £" + total.toFixed(2);
     $("#total_price").text(totalStr);
     var text_deliveryfee = document.createElement("p");
-    text_deliveryfee.innerText="Delivery Fee: £2.00";
-    var text_total =  document.createElement("p");
+    text_deliveryfee.innerText = "Delivery Fee: £2.00";
+    var text_total = document.createElement("p");
     text_total.className = "big-font";
     text_total.innerText = totalStr;
-    if(isDelivery){
+    if (isDelivery) {
         $("#total_in_confirm_page").append(text_deliveryfee);
     }
     $("#total_in_confirm_page").append(text_total);
-    if(total===0)
+    if (total === 0)
         $("#goto_checkout").attr('disabled', 'disabled');
-    else{
+    else {
         $("#goto_checkout").removeAttr('disabled');
     }
 }
@@ -82,7 +83,7 @@ function checkout() {
     obj.total = total;
     var jsonStr = JSON.stringify(obj);
     console.log(jsonStr);
-    if (total!==0) {
+    if (total !== 0) {
         $.ajax({
             type: "post",
             url: '../checkout/',

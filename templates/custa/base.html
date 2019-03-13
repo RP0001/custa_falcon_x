@@ -18,7 +18,6 @@
     <img src={% static 'assets/logo_transparent.png' %} alt="logo"/>
 
 
-
     <ul>
         {% if user.is_authenticated %}
 
@@ -28,12 +27,12 @@
             <li><a href="{% url 'register' %}">Register</a></li>
         {% endif %}
         <li><a href="{% url 'contact' %}">Contact</a></li>
-    <a href="{% url 'order' %}">Order</a>
+        <a href="{% url 'order' %}">Order</a>
         <a href="{% url 'custamise' %}">Custamise</a>
         <a class="active" href="{% url 'about' %}">About</a>
     </ul>
 </div>
-<span style = "position:relative; top:-32px;">
+<span style="position:relative; top:-32px;">
 <div class="hero-image">
     <div class="hero-text">
 

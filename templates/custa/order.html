@@ -46,12 +46,14 @@
                     $("#id_custa_{{ custa.id }}_price").text("£" + ({{ custa.price }}) / 100);
                 </script>
                 <td>
-                    <a class="btn-floating waves-effect btn-small waves-light red" style="z-index: 0"><i class="material-icons"
-                                                                                      onclick="decrease('id_custa_{{ custa.id }}_quantity')">remove</i></a>
+                    <a class="btn-floating waves-effect btn-small waves-light red" style="z-index: 0"><i
+                            class="material-icons"
+                            onclick="decrease('id_custa_{{ custa.id }}_quantity')">remove</i></a>
                     <input name="quantity" type="text" style="width: 50px; text-align: center;font-size: 28px"
                            id="id_custa_{{ custa.id }}_quantity" readonly value="0">
-                    <a class="btn-floating waves-effect btn-small waves-light red" style="z-index: 0"><i class="material-icons"
-                                                                                      onclick="increase('id_custa_{{ custa.id }}_quantity')">add</i></a>
+                    <a class="btn-floating waves-effect btn-small waves-light red" style="z-index: 0"><i
+                            class="material-icons"
+                            onclick="increase('id_custa_{{ custa.id }}_quantity')">add</i></a>
                 </td>
             </tr>
         {% endfor %}
@@ -65,13 +67,13 @@
             <h5>Order Details</h5>
             <div class="card-panel">
                 <table class="highlight striped" style="overflow-y: scroll;max-height: 830px;">
-                        <thead>
-                        <th>Name</th>
-                        <th>Price</th>
-                        <th>Quantity</th>
-                        </thead>
-                        <tbody id="order_details"></tbody>
-                    </table>
+                    <thead>
+                    <th>Name</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    </thead>
+                    <tbody id="order_details"></tbody>
+                </table>
                 <div id="total_in_confirm_page" style="text-align: right"></div>
             </div>
         </div>
@@ -92,7 +94,8 @@
                 </div>
                 <div>
                     <br>
-                    <table class="highlight centered" style="overflow-y: scroll;display: list-item;max-height: 430px;min-height: 200px">
+                    <table class="highlight centered"
+                           style="overflow-y: scroll;display: list-item;max-height: 430px;min-height: 200px">
                         <thead>
                         <th>Name</th>
                         <th>Price</th>
@@ -104,7 +107,8 @@
                 <div><h5 id="total_price" style="text-align: right">Total: £0.00</h5></div>
                 <div class="center-align">
                     <br>
-                    <a class="waves-effect waves-light btn-large modal-trigger" href="#modal1" id="goto_checkout" disabled>Go To Checkout</a>
+                    <a class="waves-effect waves-light btn-large modal-trigger" href="#modal1" id="goto_checkout"
+                       disabled>Go To Checkout</a>
                 </div>
             </div>
         </div>
