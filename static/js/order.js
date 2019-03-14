@@ -20,15 +20,15 @@ var total = 0;
 
 function update() {
     total = 0;
-    var quantity_inputs = document.getElementsByName('quantity');
+    var quantity_inputs = document.getElementsByClassName('medium-font');
     $("#total_in_confirm_page").children().remove();
     idArr = [];
     qttArr = [];
     for (var i = 0; i < quantity_inputs.length; i++) {
         var curr = quantity_inputs[i];
-        if (curr.value !== '0') {
+        if (curr.textContent !== '0') {
             var custa_index = curr.id.substring(9, (curr.id.length - 9));
-            var quantity = curr.value;
+            var quantity = curr.textContent;
             idArr.push(custa_index);
             qttArr.push(quantity);
         }
@@ -40,10 +40,11 @@ function update() {
     $("#total_price").text("");
     for (var i = 0; i < idArr.length; i++) {
         var custaname = document.createElement("td");
+        custaname.style = "max-width: 165px";
         custaname.innerText = $("#custa_" + idArr[i] + "_name").text();
         var custaprice = document.createElement("td");
         var custaqtt = document.createElement("td");
-        custaqtt.innerText = $("#id_custa_" + idArr[i] + "_quantity").val();
+        custaqtt.innerText = $("#id_custa_" + idArr[i] + "_quantity").text();
         custaprice.innerText = "£" + (parseFloat($("#id_custa_" + idArr[i] + "_price").text().substring(1)) * parseInt(custaqtt.innerText)).toFixed(2);
         total += parseFloat($("#id_custa_" + idArr[i] + "_price").text().substring(1)) * parseInt(custaqtt.innerText);
         var trEle = document.createElement("tr");
@@ -67,10 +68,12 @@ function update() {
         $("#total_in_confirm_page").append(text_deliveryfee);
     }
     $("#total_in_confirm_page").append(text_total);
-    if (total === 0)
+    if (total === 0) {
         $("#goto_checkout").attr('disabled', 'disabled');
-    else {
+        $("#goto_checkout_mobile").attr('disabled', 'disabled');
+    } else {
         $("#goto_checkout").removeAttr('disabled');
+        $("#goto_checkout_mobile").removeAttr('disabled');
     }
 }
 
@@ -93,8 +96,9 @@ function checkout() {
                 $("#modal1_content").children().remove();
                 var success_container = document.createElement("div");
                 success_container.className = "card-panel";
-                var success_info = document.createElement("h3");
+                var success_info = document.createElement("div");
                 success_info.innerText = "Your order has been placed.";
+                success_info.className = "big-font";
                 var success_icon = document.createElement("i");
                 success_icon.className = "material-icons";
                 success_icon.style = "font-size: 10rem; color: green;";
@@ -113,18 +117,30 @@ function checkout() {
     }
 }
 
+//method bonded to switch click event
+function syncSwitch(switchIndex) {
+    if (switchIndex === 1) {  //if it's the switch in the cart
+        update();         //update first
+        document.getElementById("id_is_delivery_mobile").checked = document.getElementById("id_is_delivery").checked;
+    } else {          //if it's the mobile one
+        document.getElementById("id_is_delivery").checked = document.getElementById("id_is_delivery_mobile").checked;
+        update();   //update after the cart one is synchronized
+    }
+}
+
 function increase(textID) {
     var ele = $("#" + textID);
-    var ele_num = ele.val();
-    ele.val(ele_num * 1 + 1);
+    var ele_num = ele.text();
+    ele.text(ele_num * 1 + 1);
     update();
 }
 
 function decrease(textID) {
     var ele = $("#" + textID);
-    var ele_num = ele.val();
+    var ele_num = ele.text();
     if (ele_num > 0) {
-        ele.val(ele_num * 1 - 1);
+        ele.text(ele_num * 1 - 1);
     }
     update();
 }
+

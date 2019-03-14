@@ -9,35 +9,31 @@
     <h1>CUSTAmise</h1>
     <form id="custa_form" method="POST" action="{% url 'custamise' %}">
         {% csrf_token %}
-        <div class="card-panel hoverable">
+        <div class="card-panel">
             <ul class="collapsible popout">
                 <li class="active">
                     <div class="collapsible-header" tabindex="0"><span style="font-size: 2.5rem">Base</span></div>
                     <div class="collapsible-body">
                         <div id="id_base">
-                            <ul class="collection">
+                            <ul class="collection collection-scrolled hoverable">
                                 {% for base in bases %}
                                     <li class="collection-item"><input type="radio" name="base" value="{{ base.id }}"
                                                                        required
                                                                        id="id_base_{{ base.id }}"
                                                                        onclick="calcTotal()">
                                         <label for="id_base_{{ base.id }}">
-                                            {{ base.name }} &emsp;£<span id="id_base_{{ base.id }}_price"></span>
+                                            {{ base.name }} &emsp;<span class="price">{{ base.price }}</span>
                                         </label></li>
-                                    <script>var price = {{ base.price }};
-                                    var realPrice = price / 100;
-                                    $("#id_base_{{ base.id }}_price").html(realPrice);</script>
+
                                 {% endfor %}
-                                <li>
-                                    <div class="row">
-                                        <div class="col s2 offset-s10" style="padding-top: 17px">
-                                            <button class="btn-large waves-effect waves-light" type="button"
-                                                    onclick="nextSection(0)">Next
-                                            </button>
-                                        </div>
-                                    </div>
-                                </li>
                             </ul>
+                            <div class="row">
+                                <div style="padding-top: 17px; margin-left: 46%">
+                                    <button class="btn-large waves-effect waves-light" type="button"
+                                            onclick="nextSection(0)">Next
+                                    </button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </li>
@@ -45,29 +41,24 @@
                     <div class="collapsible-header" tabindex="0"><span style="font-size: 2.5rem">Sauce</span></div>
                     <div class="collapsible-body">
                         <div id="id_sauce">
-                            <ul class="collection">
+                            <ul class="collection collection-scrolled hoverable">
                                 {% for sauce in sauces %}
                                     <li class="collection-item"><input type="radio" name="sauce" value="{{ sauce.id }}"
                                                                        required
                                                                        id="id_sauce_{{ sauce.id }}"
                                                                        onclick="calcTotal()">
                                         <label for="id_sauce_{{ sauce.id }}">
-                                            {{ sauce.name }} &emsp;£<span id="id_sauce_{{ sauce.id }}_price"></span>
+                                            {{ sauce.name }} &emsp;<span class="price">{{ sauce.price }}</span>
                                         </label></li>
-                                    <script>var price = {{ sauce.price }};
-                                    var realPrice = price / 100;
-                                    $("#id_sauce_{{ sauce.id }}_price").html(realPrice);</script>
                                 {% endfor %}
-                                <li>
-                                    <div class="row">
-                                        <div class="col s2 offset-s10" style="padding-top: 17px">
-                                            <button class="btn-large waves-effect waves-light" type="button"
-                                                    onclick="nextSection(1)">Next
-                                            </button>
-                                        </div>
-                                    </div>
-                                </li>
                             </ul>
+                            <div class="row">
+                                <div style="padding-top: 17px; margin-left: 46%">
+                                    <button class="btn-large waves-effect waves-light" type="button"
+                                            onclick="nextSection(1)">Next
+                                    </button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </li>
@@ -75,37 +66,32 @@
                     <div class="collapsible-header" tabindex="0"><span style="font-size: 2.5rem">Top</span></div>
                     <div class="collapsible-body">
                         <div id="id_top">
-                            <ul class="collection">
+                            <ul class="collection collection-scrolled hoverable">
                                 {% for top in tops %}
                                     <li class="collection-item"><input type="radio" name="top" value="{{ top.id }}"
                                                                        required
                                                                        id="id_top_{{ top.id }}"
                                                                        onclick="calcTotal()">
                                         <label for="id_top_{{ top.id }}">
-                                            {{ top.name }} &emsp;£<span id="id_top_{{ top.id }}_price"></span>
+                                            {{ top.name }} &emsp;<span class="price">{{ top.price }}</span>
                                         </label></li>
-                                    <script>var price = {{ top.price }};
-                                    var realPrice = price / 100;
-                                    $("#id_top_{{ top.id }}_price").html(realPrice);</script>
                                 {% endfor %}
-                                <li>
-                                    <div class="row">
-                                        <div class="col s2 offset-s10" style="padding-top: 17px">
-                                            <button class="btn-large waves-effect waves-light" type="button"
-                                                    onclick="nextSection(2)">Next
-                                            </button>
-                                        </div>
-                                    </div>
-                                </li>
+
                             </ul>
+                            <div class="row">
+                                <div style="padding-top: 17px; margin-left: 46%">
+                                    <a class="btn-large waves-effect waves-light" type="button"
+                                            onclick="nextSection(2)" href="##namecusta">Next
+                                    </a>
+                                </div>
+                            </div>
                         </div>
-                    </div>
                 </li>
             </ul>
         </div>
         <div class="row">
             <div id="id_tags" style="padding-bottom: 10px"></div>
-            <div class="input-field">
+            <div class="input-field" id="#namecusta">
                 <input type="text" name="name" maxlength="128" required id="id_name" class="validate">
                 <label for="id_name">Name your CUSTA!</label>
             </div>

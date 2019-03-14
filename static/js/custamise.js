@@ -1,5 +1,5 @@
 M.AutoInit();
-
+showPrice();
 function calcTotal() {
     var selected_base_id = $("input[name='base']:checked").val();
     var basePrice;
@@ -58,5 +58,13 @@ function nextSection(index) {
         } else {
             openSection(index + 1);
         }
+    }
+}
+function showPrice() {
+    var price_components = document.getElementsByClassName('price');
+    for(let c of price_components){
+        var price = c.innerText;
+        var realPrice = "£" + (parseFloat(price) / 100);
+        c.innerText = realPrice;
     }
 }

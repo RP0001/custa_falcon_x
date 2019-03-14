@@ -6,23 +6,7 @@
 {% endblock %}
 
 {% block body_block %}
-    {#    <h1>Order</h1>#}
-    {#    <div>#}
-    {#    {% for custa in custa_list %}#}
-    {#        <p>{{ custa.name }}</p>#}
-    {#    {% endfor %}#}
-    {##}
-    {#    </div>#}
-    {#    <ul class="collection with-header">#}
-    {#        <li class="collection-header"><h4>Your CUSTAs</h4></li>#}
-    {#        {% for custa in custa_list %}#}
-    {#            <li class="collection-item">#}
-    {#                #}
-    {#            </li>#}
-    {#        {% endfor %}#}
-    {##}
-    {#    </ul>#}
-    <table class="highlight centered striped">
+    <table class="highlight centered striped responsive-table">
         <thead>
         <tr>
             <th>Name</th>
@@ -37,23 +21,23 @@
         <tbody>
         {% for custa in custa_list %}
             <tr>
-                <td id="custa_{{ custa.id }}_name">{{ custa.name }}</td>
-                <td>{{ custa.base.name }}</td>
-                <td>{{ custa.sauce.name }}</td>
-                <td>{{ custa.top.name }}</td>
-                <td><span id="id_custa_{{ custa.id }}_price"></span></td>
+                <td id="custa_{{ custa.id }}_name"><div style="height: 50px; display: contents">{{ custa.name }}</div></td>
+                <td><div style="height: 50px; display: contents">{{ custa.base.name }}</div></td>
+                <td><div style="height: 50px; display: contents">{{ custa.sauce.name }}</div></td>
+                <td><div style="height: 50px; display: contents">{{ custa.top.name }}</div></td>
+                <td><div style="height: 50px; display: contents"><span style="font-size: 1.6rem" id="id_custa_{{ custa.id }}_price"></span></div></td>
                 <script>
                     $("#id_custa_{{ custa.id }}_price").text("£" + ({{ custa.price }}) / 100);
                 </script>
-                <td>
-                    <a class="btn-floating waves-effect btn-small waves-light red" style="z-index: 0"><i
+                <td style="min-width: 160px">
+                    <div style="height: 50px; display: contents"><a class="btn-floating  btn-small waves-effect red" style="z-index: 0"><i
                             class="material-icons"
                             onclick="decrease('id_custa_{{ custa.id }}_quantity')">remove</i></a>
-                    <input name="quantity" type="text" style="width: 50px; text-align: center;font-size: 28px"
-                           id="id_custa_{{ custa.id }}_quantity" readonly value="0">
-                    <a class="btn-floating waves-effect btn-small waves-light red" style="z-index: 0"><i
-                            class="material-icons"
-                            onclick="increase('id_custa_{{ custa.id }}_quantity')">add</i></a>
+                        <span class="medium-font"
+                              id="id_custa_{{ custa.id }}_quantity">0</span>
+                        <a class="btn-floating waves-effect btn-small waves-light red" style="z-index: 0"><i
+                                class="material-icons"
+                                onclick="increase('id_custa_{{ custa.id }}_quantity')">add</i></a></div>
                 </td>
             </tr>
         {% endfor %}
@@ -61,12 +45,23 @@
         </tbody>
     </table>
     {% csrf_token %}
+    <div class="show-on-small hide-on-large-only" style="display: grid">
+        <div class="switch center-align" style="zoom: 160%; padding: 10px"><label style="font-size: 1.5rem">
+            Pickup
+            <input type="checkbox" id="id_is_delivery_mobile" onclick="syncSwitch(2)">
+            <span class="lever"></span>
+            Delivery
+        </label></div>
+        <a class="btn-large waves-effect waves-light modal-trigger" style="zoom: 150%" href="#modal1" disabled id="goto_checkout_mobile">Go To
+            Checkout
+        </a>
+    </div>
     <div id="modal1" class="modal" style="max-height: 90%">
         <div class="modal-content" id="modal1_content">
             <h4>Confirm Your Order</h4>
             <h5>Order Details</h5>
             <div class="card-panel">
-                <table class="highlight striped" style="overflow-y: scroll;max-height: 830px;">
+                <table class="highlight" style="overflow-y: scroll;max-height: 830px;">
                     <thead>
                     <th>Name</th>
                     <th>Price</th>
@@ -83,11 +78,11 @@
     </div>
     <div class="col hide-on-small-only m3 xl3 offset-xl1">
         <div class="toc-wrapper pinned" style="top: 20%;right: 0%">
-            <div class="card-panel hoverable" style="background-color: #f1f1f1">
-                <div class="switch center-align">
+            <div class="card-panel hoverable hide-on-med-and-down" style="background-color: #f1f1f1; zoom: 78%">
+                <div class="switch center-align" style="zoom: 145%">
                     <label style="font-size: 1.5rem">
                         Pickup
-                        <input type="checkbox" id="id_is_delivery" onclick="update()">
+                        <input type="checkbox" id="id_is_delivery" onclick="syncSwitch(1)">
                         <span class="lever"></span>
                         Delivery
                     </label>
@@ -97,8 +92,8 @@
                     <table class="highlight centered"
                            style="overflow-y: scroll;display: list-item;max-height: 430px;min-height: 200px">
                         <thead>
-                        <th>Name</th>
-                        <th>Price</th>
+                        <th style="min-width: 160px">Name</th>
+                        <th >Price</th>
                         <th>Quantity</th>
                         </thead>
                         <tbody id="cart"></tbody>
@@ -113,9 +108,6 @@
             </div>
         </div>
     </div>
-    <script>
-
-    </script>
     <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
     <script src="{% static "js/order.js" %}"></script>
 {% endblock %}

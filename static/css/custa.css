@@ -58,8 +58,7 @@ pre {
 }
 
 .body_text_1 {
-    font-family: "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Geneva, Verdana, sans-serif;
-    font-size: 20px;
+    font-size: 1.4rem;
     font-style: normal;
     font-variant: normal;
     font-weight: 500;
@@ -105,6 +104,18 @@ ul {
   list-style-type: none;
   margin: 0;
   padding: 0;
+}
+
+.nav{
+    background-color: #333;
+    background-image: inherit;
+    zoom: 115%;
+}
+nav ul a{
+    font-size: 1.4rem!important;
+}
+nav ul li.active{
+    background-color: rgb(228, 162, 41) !important;
 }
 
 .header {
@@ -159,4 +170,11 @@ table.highlight > tbody > tr:hover {
 }
 .big-font{
     font-size: 2rem;
+}
+.medium-font{
+    font-size: 1.5rem;
+}
+.collection-scrolled{
+    overflow-y: scroll!important;
+    height: 550px;
 }

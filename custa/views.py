@@ -1,6 +1,7 @@
 import json
 from itertools import chain
 
+from django.db.models.expressions import RawSQL
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect
@@ -16,7 +17,7 @@ context_dict = {}
 
 # Index/about/home page.
 def about(request):
-    return render(request, 'custa/about.html')
+    return render(request, 'custa/index.html')
 
 
 # Contact us page.
@@ -74,6 +75,28 @@ def checkout(request):
     for i in range(0, len(id_array)):
         OrderCusta.objects.create(quantity=quantity_array[i], custa_id=id_array[i], order=new_order)
     return HttpResponse(json.dumps({"haha": "SS"}))
+
+
+@login_required
+def order_history(request):
+    orders = Order.objects.filter(user=request.user)
+    user_id = str(request.user.id)
+    # order_ids = list()
+    # for o in orders:
+    #     # order_custas.append(OrderCusta.objects.filter(order=o))
+    #     order_ids.append(o.id)
+    order_ids = orders.values("id")
+    order_custas = OrderCusta.objects.filter(order_id__in=order_ids)
+    order_custas_queryset_list = list();
+    for o in orders:
+        order_custas_queryset_list.append(OrderCusta.objects.filter(order=o))
+    print(order_custas)
+    context_dict['orders'] = orders
+    context_dict['order_custas'] = order_custas
+    context_dict['range_of_orders'] = range(0, len(orders))
+    context_dict['order_ids'] = order_ids
+    context_dict['order_custas_queryset_list'] = order_custas_queryset_list
+    return render(request, "custa/order-history.html", context_dict)
 
 
 # Register page.

@@ -6,5 +6,59 @@
 {% endblock %}
 
 {% block body_block %}
-    <h3>Order Hist</h3>
+    <h3>Previous Orders</h3>
+    <div class="card-panel">
+        <table class="striped">
+            <thead>
+            <tr>
+                <th style="text-align: center">Order Details</th>
+                <th>Order Type</th>
+                <th>Total Price</th>
+                <th style="text-align: center">Order Time</th>
+            </tr>
+            <tbody>
+            {% for order_custas_queryset in order_custas_queryset_list %}
+                <tr>
+                    <td>
+
+                        <table class="highlight">
+                            <thead>
+                            <tr>
+                                <th>Custa Name</th>
+                                <th style="text-align: right">Unit Price</th>
+                            </tr>
+                            </thead>
+                            {% for order_custa in order_custas_queryset %}
+                                <tbody>
+                                <tr style="border-bottom: 1px solid #d0d0d0">
+                                    <td>{{ order_custa.custa }}</td>
+                                    <td style="text-align: right"><span
+                                            class="price">{{ order_custa.custa.price }}</span></td>
+                                </tr>
+                                </tbody>
+                            {% endfor %}
+                        </table>
+
+                    </td>
+                    <td class="ordertype"
+                        style="text-align: center">{{ order_custas_queryset.first.order.is_delivery }}</td>
+                    <td class="price" style="text-align: center">{{ order_custas_queryset.first.order.total }}</td>
+                    <td>
+                        {{ order_custas_queryset.first.order.time }}
+                    </td>
+
+                </tr>
+            {% endfor %}
+
+            </tbody>
+            </thead>
+        </table>
+    </div>
+    <div class="fixed-action-btn">
+        <button class="btn-large waves-effect">
+            <i class="large material-icons">replay</i>
+            BACK TO MY ACCOUNT
+        </button>
+    </div>
+    <script src="{% static "js/order-history.js" %}"></script>
 {% endblock %}

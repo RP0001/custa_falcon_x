@@ -14,24 +14,33 @@
     </title>
 </head>
 
-<div class="header">
-    <img src={% static 'assets/logo_transparent.png' %} alt="logo"/>
-
-
-    <ul>
-        {% if user.is_authenticated %}
+<nav class="nav">
+<div class="nav-wrapper container">
+{#<img class="" src={% static 'assets/logo_transparent.png' %} alt="logo"/>#}
+  <a href="{% url 'index' %}" class="brand-logo">LOGO</a>
+  <ul id="nav-mobile" class="right hide-on-med-and-down">
+            {% if user.is_authenticated %}
 
             <li><a href="{% url 'logout' %}">Logout</a></li>
         {% else %}
-            <li><a href="{% url 'login' %}">Login</a></li>
-            <li><a href="{% url 'register' %}">Register</a></li>
+            <li id="nav-login"><a href="{% url 'login' %}">Login</a></li>
+            <li id="nav-register"><a href="{% url 'register' %}">Register</a></li>
         {% endif %}
-        <li><a href="{% url 'contact' %}">Contact</a></li>
-        <a href="{% url 'order' %}">Order</a>
-        <a href="{% url 'custamise' %}">Custamise</a>
-        <a class="active" href="{% url 'about' %}">About</a>
-    </ul>
+        <li id="nav-contact"><a href="{% url 'contact' %}">Contact</a></li>
+      <li id="nav-order"><a href="{% url 'order' %}">Order</a></li>
+      <li id="nav-custamise"><a href="{% url 'custamise' %}">Custamise</a></li>
+      <li id="nav-index"><a class="active" href="{% url 'index' %}">index</a></li>
+  </ul>
 </div>
+</nav>
+{#<div class="header">#}
+{#    <img src={% static 'assets/logo_transparent.png' %} alt="logo"/>#}
+{##}
+{##}
+{#    <ul>#}
+
+{#    </ul>#}
+{#</div>#}
 <span style="position:relative; top:-32px;">
 <div class="hero-image">
     <div class="hero-text">
@@ -47,6 +56,7 @@
     {% block body_block %}
     {% endblock %}
 </div>
+<script src="{% static "js/base.js" %}"></script>
 </body>
 
 <div class="footer-image">
