@@ -14,25 +14,7 @@
     </title>
 </head>
 
-<nav class="nav">
-<div class="nav-wrapper container">
-{#<img class="" src={% static 'assets/logo_transparent.png' %} alt="logo"/>#}
-  <a href="{% url 'index' %}" class="brand-logo">LOGO</a>
-  <ul id="nav-mobile" class="right hide-on-med-and-down">
-            {% if user.is_authenticated %}
 
-            <li><a href="{% url 'logout' %}">Logout</a></li>
-        {% else %}
-            <li id="nav-login"><a href="{% url 'login' %}">Login</a></li>
-            <li id="nav-register"><a href="{% url 'register' %}">Register</a></li>
-        {% endif %}
-        <li id="nav-contact"><a href="{% url 'contact' %}">Contact</a></li>
-      <li id="nav-order"><a href="{% url 'order' %}">Order</a></li>
-      <li id="nav-custamise"><a href="{% url 'custamise' %}">Custamise</a></li>
-      <li id="nav-index"><a class="active" href="{% url 'index' %}">index</a></li>
-  </ul>
-</div>
-</nav>
 {#<div class="header">#}
 {#    <img src={% static 'assets/logo_transparent.png' %} alt="logo"/>#}
 {##}
@@ -41,20 +23,44 @@
 
 {#    </ul>#}
 {#</div>#}
-<span style="position:relative; top:-32px;">
-<div class="hero-image">
-    <div class="hero-text">
 
-        <h1>Your Gateway to Custom Pasta &copy;</h1>
+
+
+<body>
+<div class="parallax-container" id="parallax-1" style="height: 150px;">
+    <div class="navbar-fixed">
+        <nav class="nav" role="navigation">
+            <div class="nav-wrapper container">
+            <img class="logo brand-logo" src={% static 'assets/logo-nav.png' %} alt="logo"/>
+{#              <a href="{% url 'index' %}" class="brand-logo">LOGO</a>#}
+              <ul id="nav-mobile" class="right hide-on-med-and-down">
+                        {% if user.is_authenticated %}
+                            <li><a href="{% url 'logout' %}">Logout</a></li>
+                        {% else %}
+                            <li id="nav-login"><a href="{% url 'login' %}">Login</a></li>
+                            <li id="nav-register"><a href="{% url 'register' %}">Register</a></li>
+                        {% endif %}
+                  <li id="nav-contact"><a href="{% url 'contact' %}">Contact</a></li>
+                  <li id="nav-order"><a href="{% url 'order' %}">Order</a></li>
+                  <li id="nav-custamise"><a href="{% url 'custamise' %}">Custamise</a></li>
+                  <li id="nav-index"><a class="active" href="{% url 'index' %}">index</a></li>
+              </ul>
+            </div>
+            </nav>
     </div>
+    <div class="container center-align"><span class="hero-text">Your gateway to custom pasta</span></div>
+    {% block parallax1 %}
+
+    {% endblock %}
+    <div class="parallax"><img src="{% static "assets/pasta_background_1.jpg" %}"></div>
 </div>
-</span>
-<body class=body_text_1>
 <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-1.9.0.min.js"></script>
 <script src="{% static "js/materialize.js" %}"></script>
-<div class="container">
-    {% block body_block %}
-    {% endblock %}
+<div class="">
+    <div class="container">
+        {% block body_block %}
+        {% endblock %}
+    </div>
 </div>
 <script src="{% static "js/base.js" %}"></script>
 </body>
