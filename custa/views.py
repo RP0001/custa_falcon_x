@@ -44,8 +44,7 @@ def custamise(request):
             custa = custa_form.save(commit=False)
             custa.user = user
             custa.save()
-
-    print(user.username)
+            return HttpResponseRedirect(reverse('order'))
     return render(request, 'custa/custamise.html', context_dict)
 
 
