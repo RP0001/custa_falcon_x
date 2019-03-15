@@ -37,16 +37,19 @@
         </ul>
         <nav class="nav" role="navigation">
             <div class="nav-wrapper container">
-                <img class="logo brand-logo" src={% static 'assets/logo-nav.png' %} alt="logo"/>
-                {#              <a href="{% url 'index' %}" class="brand-logo">LOGO</a>#}
+                <a href="{% url "index" %}"><img class="logo brand-logo"
+                                                 src={% static 'assets/logo-nav.png' %} alt="logo"/></a>
+                <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
                 <ul id="nav-mobile" class="right hide-on-med-and-down">
-                    <li id="nav-index"><a class="active" href="{% url 'index' %}">index</a></li>
+                    <li id="nav-index"><a class="active" href="{% url 'index' %}">Index</a></li>
                     <li id="nav-contact"><a href="{% url 'contact' %}">Contact</a></li>
                     <li id="nav-order"><a href="{% url 'order' %}">Order</a></li>
                     <li id="nav-custamise"><a href="{% url 'custamise' %}">Custamise</a></li>
 
                     {% if user.is_authenticated %}
-                        <li id="nav-username"><a class="dropdown-trigger" href="#!" data-target="dropdown1">{{ user.username }}<i class="material-icons right">arrow_drop_down</i></a></li>
+                        <li id="nav-username"><a class="dropdown-trigger" href="#!"
+                                                 data-target="dropdown1">&nbsp;&nbsp;{{ user.username }}<i
+                                class="material-icons right">arrow_drop_down</i></a></li>
                     {% else %}
                         <li id="nav-login"><a href="{% url 'login' %}">Login</a></li>
                         <li id="nav-register"><a href="{% url 'register' %}">Register</a></li>
@@ -55,6 +58,22 @@
             </div>
         </nav>
     </div>
+<ul class="sidenav" id="mobile-demo">
+            <li><a class="active" href="{% url 'index' %}">Index</a></li>
+            <li><a href="{% url 'contact' %}">Contact</a></li>
+            <li><a href="{% url 'order' %}">Order</a></li>
+            <li><a href="{% url 'custamise' %}">Custamise</a></li>
+
+            {% if user.is_authenticated %}
+                <li><a href="{% url "my-account" %}">{{ request.user.username }}</a></li>
+                <li class="divider"></li>
+                <li><a href="{% url "logout" %}">Logout</a></li>
+            {% else %}
+                <li><a href="{% url 'login' %}">Login</a></li>
+                <li><a href="{% url 'register' %}">Register</a></li>
+            {% endif %}
+        </ul>
+
     <div class="container center-align"><span class="hero-text">Your gateway to custom pasta</span></div>
     {% block parallax1 %}
 
@@ -74,7 +93,7 @@
 <script src="{% static "js/base.js" %}"></script>
 </body>
 
-<div class="footer-image" id="footer">
+<div class="footer-image hide-on-small-and-down" id="footer">
     <div class="container" style="color: whitesmoke">
         <div class="row" style="margin-bottom: 0px">
             <div class="col s4">

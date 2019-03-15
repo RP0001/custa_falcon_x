@@ -70,3 +70,9 @@ class OrderCusta(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE, unique=False)
     custa = models.ForeignKey(Custa, on_delete=models.CASCADE, unique=False)
     quantity = models.IntegerField(null=False)  # Must provide a quantity
+
+
+class Requirement(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=False)
+    description = models.CharField(max_length=char_field_max_length, null=False, unique=False)
+    time = models.DateTimeField(auto_now_add=True, null=True)

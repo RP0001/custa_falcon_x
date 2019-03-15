@@ -17,8 +17,28 @@ pre {
     line-height: 18.5714px;
 }
 
-.input-no-margin{
-    margin-bottom: 0px!important;
+.input-no-margin {
+    margin-bottom: 0px !important;
+}
+
+.btn-with-margin {
+    margin-left: 40px !important;
+    margin-right: 40px !important;
+}
+
+.btn-giant-mobile {
+    height: 75px !important;
+    width: 100% !important;
+}
+
+.btn-giant {
+    height: 110px !important;
+    width: 100% !important;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    font-size: 2.3rem !important;
+    padding-top: 25px !important;
+    line-height: 2.3rem!important;
 }
 
 .hero-image {
@@ -159,12 +179,12 @@ table.highlight > tbody > tr:hover {
 }
 
 .medium-font {
-    font-size: 1.5rem;
+    font-size: 1.5rem!important;
 }
 
 .collection-scrolled {
     overflow-y: scroll !important;
-    height: 550px;
+    height: 400px;
 }
 
 img {
@@ -180,12 +200,29 @@ img {
     opacity: 0.8;
 }
 
-.dropdown{
-    background: inherit!important;
+.dropdown {
+    background: inherit !important;
     padding-top: 65px;
-    background-color: rgba(0, 0, 0, 0.5)!important;
+    background-color: rgba(0, 0, 0, 0.5) !important;
 }
-.dropdown-content li > a{
-    color: whitesmoke!important;
+
+.dropdown-content li > a {
+    color: whitesmoke !important;
     font-size: 1rem;
 }
+
+/* Always set the map height explicitly to define the size of the div
+             * element that contains the map. */
+#map {
+    width: 100%!important;
+
+}
+.map-container{
+    width: 100%;
+  height: 0;
+  padding-bottom: 60%;
+  overflow: hidden;
+}
+
+
+

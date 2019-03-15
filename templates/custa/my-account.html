@@ -6,10 +6,11 @@
 {% endblock %}
 
 {% block body_block %}
+    {% csrf_token %}
     <h1>My Account</h1>
     <div class="row">
-        <div class="col s6">
-            <div class="card">
+        <div class="col s12 m12 l8">
+            <div class="card"  id="account-details">
                 <span class="card-title">Account Details</span>
                 <div class="card-content">
                     <ul class="collection">
@@ -21,39 +22,60 @@
                             </div>
                         </li>
                         <li class="collection-item">
-                            <div class="input-field input-no-margin">
+                            <div class="input-field input-no-margin" id="#prefname">
                                 <i class="material-icons prefix">account_circle</i>
-                                <input type="text" disabled value="{{ userprofile.first.pref_name }}" id="prefname" class="validate">
+                                <input type="text" disabled value="{{ userprofile.first.pref_name }}" id="prefname"
+                                       class="validate">
                                 <label for="prefname">Preferred Name</label>
                             </div>
                         </li>
                         <li class="collection-item">
                             <div class="input-field input-no-margin">
                                 <i class="material-icons prefix">email</i>
-                                <input type="text" disabled value="{{ user.email }}" id="email" class="validate">
+                                <input type="email" disabled value="{{ user.email }}" id="email" class="validate">
                                 <label for="email">Email</label>
                             </div>
                         </li>
                         <li class="collection-item">
                             <div class="input-field input-no-margin">
                                 <i class="material-icons prefix">phone</i>
-                                <input type="text" disabled value="{{ userprofile.first.phone }}" id="phone" class="validate">
+                                <input type="text" disabled value="{{ userprofile.first.phone }}" id="phone"
+                                       class="validate">
                                 <label for="phone">Phone</label>
                             </div>
                         </li>
                         <li class="collection-item">
                             <div class="input-field input-no-margin">
                                 <i class="material-icons prefix">home</i>
-                                <input type="text" disabled value="{{ userprofile.first.address }}" id="address" class="validate">
+                                <input type="text" disabled value="{{ userprofile.first.address }}" id="address"
+                                       class="validate">
                                 <label for="address">Address</label>
                             </div>
                         </li>
                     </ul>
                 </div>
+                <div class="card-action center-align">
+                    <a class="btn-large waves-light btn-with-margin" onclick="edit()" href="#prefname" id="edit-btn">Edit</a>
+                    <button class="btn-large waves-light btn-with-margin" disabled onclick="save()" id="save-btn">Save
+                    </button>
+                </div>
             </div>
         </div>
-        <div class="col s6">
+        <div class="col s12 m12 l4 hide-on-med-and-down card-panel" id="buttons">
+            <a class="btn-large waves-effect waves-light btn-giant" href="{% url "order-history" %}">Order History</a>
+            <a class="btn-large waves-effect waves-light btn-giant" href="{% url "order" %}">My CUSTAs/Order</a>
+            <a class="btn-large waves-effect waves-light btn-giant" href="{% url "logout" %}">Logout</a>
+
+
+        </div>
+        <div class="col s12 m12 hide-on-large-only">
+            <a class="btn-large waves-effect waves-light btn-giant-mobile" href="{% url "order-history" %}">Order History</a>
+            <a class="btn-large waves-effect waves-light btn-giant-mobile" href="{% url "order" %}">My CUSTAs/Order</a>
+            <a class="btn-large waves-effect waves-light btn-giant-mobile" href="{% url "logout" %}">Logout</a>
+
 
         </div>
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
+    <script src="{% static "js/my-account.js" %}"></script>
 {% endblock %}

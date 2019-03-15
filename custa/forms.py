@@ -1,8 +1,8 @@
 from django import forms
 from django.contrib.auth.models import User
-from django.forms import RadioSelect, TextInput
+from django.forms import RadioSelect
 
-from custa.models import UserProfile, Custa, Order, OrderCusta
+from custa.models import UserProfile, Custa, Order, Requirement
 
 
 class UserForm(forms.ModelForm):
@@ -36,5 +36,7 @@ class OrderForm(forms.ModelForm):
         fields = ('is_delivery', 'total')
 
 
-# class OrderCustaForm(forms.ModelForm):
-#     clas
+class RequirementForm(forms.ModelForm):
+    class Meta:
+        model = Requirement
+        fields = ('description',)

@@ -6,13 +6,13 @@
 {% endblock %}
 
 {% block body_block %}
-    <h1>CUSTAmise</h1>
+    <h2>CUSTAmise</h2>
     <form id="custa_form" method="POST" action="{% url 'custamise' %}">
         {% csrf_token %}
         <div class="card-panel">
             <ul class="collapsible popout">
                 <li class="active">
-                    <div class="collapsible-header" tabindex="0"><span style="font-size: 2.5rem">Base</span></div>
+                    <div class="collapsible-header" tabindex="0"><span class="medium-font">Base</span></div>
                     <div class="collapsible-body">
                         <div id="id_base">
                             <ul class="collection collection-scrolled hoverable">
@@ -38,7 +38,7 @@
                     </div>
                 </li>
                 <li>
-                    <div class="collapsible-header" tabindex="0"><span style="font-size: 2.5rem">Sauce</span></div>
+                    <div class="collapsible-header" tabindex="0"><span class="medium-font">Sauce</span></div>
                     <div class="collapsible-body">
                         <div id="id_sauce">
                             <ul class="collection collection-scrolled hoverable">
@@ -63,7 +63,7 @@
                     </div>
                 </li>
                 <li>
-                    <div class="collapsible-header" tabindex="0"><span style="font-size: 2.5rem">Top</span></div>
+                    <div class="collapsible-header" tabindex="0"><span class="medium-font">Top</span></div>
                     <div class="collapsible-body">
                         <div id="id_top">
                             <ul class="collection collection-scrolled hoverable">
@@ -80,8 +80,8 @@
                             </ul>
                             <div class="row">
                                 <div style="padding-top: 17px; margin-left: 46%">
-                                    <a class="btn-large waves-effect waves-light" type="button"
-                                            onclick="nextSection(2)" href="##namecusta">Next
+                                    <a class="btn-large waves-effect waves-light"
+                                            onclick="nextSection(2)" href="#namecusta">Next
                                     </a>
                                 </div>
                             </div>
@@ -99,8 +99,7 @@
                 <input style="display: none" type="number" name="price" required id="id_price" readonly>
                 <h5 id="price_label">Price: £ 0.00</h5>
             </div>
-
-            <input class="btn-large waves-effect waves-light" type="submit" name="submit" value="create">
+            <button class="btn-large waves-effect waves-light">create</button>
         </div>
     </form>
     <script src="{% static "js/custamise.js" %}"></script>

@@ -2,66 +2,71 @@
 {% extends 'custa/base.html' %}
 {% load staticfiles %}
 {% block title_block %}
+    Contact Us
 {% endblock %}
 
 <html>
-    {% block body_block %}
-  <head>
-    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
-    <meta charset="utf-8">
-    <title>Simple Markers</title>
-    <style>
-      /* Always set the map height explicitly to define the size of the div
-       * element that contains the map. */
-      #map {
-        height: 400px;
-        width: 400px;
-      }
-      /* Optional: Makes the sample page fill the window. */
-      html, body {
-        height: 100%;
-        margin: 0;
-        padding: 0;
-      }
-    </style>
-  </head>
+{% block body_block %}
 
+    <div class="row">
+        <div class="col s12 m5">
+            <div class="card-panel hoverable">
+                <h3>Contact Details</h3>
+                <span class="medium-font">Email: contact@custa.com<br>
+                    Phone: 0740 333 2111<br>
+                Social Media: https://www.facebook.com/custa/<br></span>
+            </div>
+            <br>
 
-    <div id="map" style="float: initial">
+            <div class="card-panel hoverable">
+                <br>
+                <h3>Opening Hours:</h3><br>
+                <span class="medium-font">Mon - Fri 9 AM - 11 PM<br>
+                    Sat - Sun 10 AM - 11 PM</span>
+            </div>
+            <br>
+            <div class="card-panel hoverable">
+                <div class="center-align"><span class="big-font">Require new ingeredients?</span></div>
+                <br>
+                <div class="center-align">
+                    <a class="btn-large waves-effect modal-trigger" href="#modal1">Submit Requirements</a>
+                </div>
+            </div>
+        </div>
 
+        <div class="col s12 m7">
+            <div class="card-panel hoverable">
+                <h5>Loation</h5>
+                <div id="map" style="float: initial">
+                </div>
+            </div>
+        </div>
     </div>
-            <div><b>Contact Details</b></br>
-        Email: contact@custa.com</br>
-        Phone: 0740 333 2111</br>
-        Social Media: https://www.facebook.com/custa/
-            </div>
-        <div></br><b>Opening Hours:</b></br>
-            Mon - Fri 9 AM - 11 PM</br>
-            Sat - Sun 10 AM - 11 PM
-            </div>
-    <script>
-
-      function initMap() {
-        var myLatLng = {lat: 55.873706, lng: -4.292585};
-
-        var map = new google.maps.Map(document.getElementById('map'), {
-          zoom: 17,
-          center: myLatLng
-        });
-
-        var marker = new google.maps.Marker({
-          position: myLatLng,
-          map: map,
-          title: 'CUSTA'
-        });
-
-        var infowindow = new google.maps.InfoWindow({
-    content: contentString
-  });
-      }
-    </script>
+    <div id="modal1" class="modal">
+        <div class="modal-content">
+            <h4>Submit Your Requirement</h4>
+            {% if user.is_authenticated%}
+                <form id="req_form" method="post" action="{% url "contact" %}">
+                {% csrf_token %}
+                <div class="input-field">
+                    <i class="material-icons prefix">wb_incandescent</i>
+                    <input type="text" name="description" id="id_description" value="" size="50"/>
+                    <label for="id_description">description</label>
+                </div>
+                <div class="center-align"><button class="btn-large waves-effect">Submit</button> </div>
+            </form>
+                {% else %}
+                <i class="material-icons" style="font-size: 10rem; color: red;">sms_failed</i>
+                <h5>Sorry, you need to <a class="btn-flat medium-font" href="{% url "login" %}">login</a> first.</h5>
+            {% endif %}
+        </div>
+        <div class="modal-footer">
+            <a href="#!" class="modal-close waves-effect waves-green btn-large btn-flat">Close</a>
+        </div>
+    </div>
+    <script src="{% static "js/gmaps.js" %}"></script>
     <script async defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDBcAFDmXVrfK9dv4TmJYrKsJyziKh50jQ&callback=initMap">
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDBcAFDmXVrfK9dv4TmJYrKsJyziKh50jQ&callback=initMap">
     </script>
 {% endblock %}
 </html>

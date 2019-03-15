@@ -9,8 +9,9 @@ from django.contrib.auth import authenticate, login
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
-from custa.forms import UserForm, UserProfileForm, CustaForm
+from custa.forms import UserForm, UserProfileForm, CustaForm, RequirementForm
 from custa.models import Base, Sauce, Top, Custa, Order, OrderCusta, UserProfile
+from django.contrib.auth.models import User
 
 context_dict = {}
 
@@ -18,11 +19,6 @@ context_dict = {}
 # Index/about/home page.
 def about(request):
     return render(request, 'custa/index.html')
-
-
-# Contact us page.
-def contact(request):
-    return render(request, 'custa/contact.html')
 
 
 @login_required
@@ -74,17 +70,13 @@ def checkout(request):
     new_order.save()
     for i in range(0, len(id_array)):
         OrderCusta.objects.create(quantity=quantity_array[i], custa_id=id_array[i], order=new_order)
-    return HttpResponse(json.dumps({"haha": "SS"}))
+    return HttpResponse(json.dumps({"message": "success"}))
 
 
 @login_required
 def order_history(request):
     orders = Order.objects.filter(user=request.user)
     user_id = str(request.user.id)
-    # order_ids = list()
-    # for o in orders:
-    #     # order_custas.append(OrderCusta.objects.filter(order=o))
-    #     order_ids.append(o.id)
     order_ids = orders.values("id")
     order_custas = OrderCusta.objects.filter(order_id__in=order_ids)
     order_custas_queryset_list = list();
@@ -102,7 +94,34 @@ def order_history(request):
 def my_account(request):
     userprofile = UserProfile.objects.filter(user=request.user)
     context_dict['userprofile'] = userprofile
-    return render(request, "custa/myaccount.html", context_dict)
+    return render(request, "custa/my-account.html", context_dict)
+
+
+def edit_profile(request):
+    data = json.loads(request.body)
+    userprofile = UserProfile.objects.get(user=request.user)
+    user = User.objects.get(username=request.user.username)
+    user.email = data.get('email')
+    userprofile.pref_name = data.get('pref_name')
+    userprofile.phone = data.get('phone')
+    userprofile.address = data.get('address')
+    user.save()
+    userprofile.save()
+    return HttpResponse(json.dumps({"message": "success"}))
+
+
+# Contact us page.
+def contact(request):
+    if request.user.id is not None:
+        if request.method == 'POST':
+            req_form = RequirementForm(data=request.POST)
+            context_dict['req_form'] = req_form
+            if req_form.is_valid():
+                req = req_form.save(commit=False)
+                req.user = request.user
+                req.save()
+    return render(request, 'custa/contact.html', context_dict)
+
 
 # Register page.
 def register(request):
@@ -118,6 +137,7 @@ def register(request):
             profile.user = user
             profile.save()
             registered = True
+            return HttpResponseRedirect(reverse('index'))
         else:
             print(user_form.errors, profile_form.errors)
     else:
@@ -138,7 +158,7 @@ def user_login(request):
         if user:
             if user.is_active:
                 login(request, user)
-                return HttpResponseRedirect(reverse('about'))
+                return HttpResponseRedirect(reverse('index'))
             else:
                 return HttpResponse("Your account is disabled.")
         else:

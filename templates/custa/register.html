@@ -9,19 +9,48 @@
     {#    <script src="{% static "layui/layui.js" %}"></script>#}
     <h1>REGISTER</h1>
     {% if registered %}
-        YOU ARE REGISTERED.
-        <a href="{% url 'about' %}">Return to the homepage.</a><br/>
+        <div class="card-panel">YOU  ALREADY REGISTERED.</div>
+        <a class="btn-large waves-effect" href="{% url 'index' %}">Return to the homepage.</a><br/>
     {% else %}
-        REGISTER HERE:
-        <form id="user_form" class="layui-form" method="post" action="{% url 'register' %}"
-              enctype="multipart/form-data">
-            {% csrf_token %}
-            {{ user_form.as_p }}
-            {{ profile_form.as_p }}
-            <input type="submit" class="layui-btn" name="submit" value="Register"/>
-        </form>
-        <script>
 
-        </script>
+        <div class="card-panel">
+            <form id="user_form" method="post" action="{% url 'register' %}"
+                  enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="input-field">
+                    <i class="material-icons prefix">person</i>
+                    <input type="text" name="username" id="id_username" value="" size="50"/>
+                    <label for="id_username">Username</label>
+                </div>
+                <div class="input-field">
+                    <i class="material-icons prefix">vpn_key</i>
+                    <input type="password" name="password" id="id_password" value="" size="50"/>
+                    <label for="id_password">Password</label>
+                </div>
+                <div class="input-field">
+                    <i class="material-icons prefix">account_circle</i>
+                    <input type="text" name="pref_name" id="id_pref_name" value="" size="50"/>
+                    <label for="id_pref_name">Preferred Name</label>
+                </div>
+                <div class="input-field">
+                    <i class="material-icons prefix">email</i>
+                    <input type="email" name="email" id="id_email" value="" size="50"/>
+                    <label for="id_email">Email</label>
+                </div>
+                <div class="input-field">
+                    <i class="material-icons prefix">phone</i>
+                    <input type="text" name="phone" id="id_phone" value="" size="50"/>
+                    <label for="id_phone">Phone</label>
+                </div>
+                <div class="input-field">
+                    <i class="material-icons prefix">home</i>
+                    <input type="text" name="address" id="id_address" value="" size="100"/>
+                    <label for="id_address">Address</label>
+                </div>
+
+                <div class="center-align"><input type="submit" class="btn-large waves-effect" name="submit"
+                                                 value="Register"/></div>
+            </form>
+        </div>
     {% endif %}
 {% endblock %}

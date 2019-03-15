@@ -109,7 +109,7 @@ function checkout() {
                 var back_button = document.createElement("a");
                 back_button.className = "btn-large waves-effect";
                 back_button.innerText = "OK";
-                back_button.href = "../order/";
+                back_button.href = "../";
                 $("#modal_footer").children().remove();
                 $("#modal_footer").append(back_button);
             }

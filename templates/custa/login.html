@@ -9,10 +9,21 @@
 <h1>LOGIN</h1>
 <form id="login_form" method="post" action="{% url 'login' %}">
     {% csrf_token %}
-    Username: <input type="text" name="username" value="" size="50" />
-    <br />
-    Password: <input type="password" name="password" value="" size="50" />
-    <br />
-    <input type="submit" value="submit" />
+    <div class="card-panel">
+        <div class="input-field">
+            <i class="material-icons prefix">person</i>
+            <input type="text" name="username" id="id_username" value="" size="50"/>
+            <label for="id_username">Username</label>
+        </div>
+
+        <div class="input-field">
+            <i class="material-icons prefix">vpn_key</i>
+            <input type="password" name="password" id="id_password" value="" size="50"/>
+            <label for="id_password">Password</label>
+        </div>
+        <div class="center-align">
+            <a href="{% url 'register' %}" class="btn-large btn-flat waves-effect">Register</a>
+            <input class="btn-large waves-effect" type="submit" value="Login"/></div>
+    </div>
 </form>
 {% endblock %}
