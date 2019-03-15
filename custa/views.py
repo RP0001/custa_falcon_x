@@ -10,7 +10,7 @@ from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
 from custa.forms import UserForm, UserProfileForm, CustaForm
-from custa.models import Base, Sauce, Top, Custa, Order, OrderCusta
+from custa.models import Base, Sauce, Top, Custa, Order, OrderCusta, UserProfile
 
 context_dict = {}
 
@@ -98,6 +98,11 @@ def order_history(request):
     context_dict['order_custas_queryset_list'] = order_custas_queryset_list
     return render(request, "custa/order-history.html", context_dict)
 
+
+def my_account(request):
+    userprofile = UserProfile.objects.filter(user=request.user)
+    context_dict['userprofile'] = userprofile
+    return render(request, "custa/myaccount.html", context_dict)
 
 # Register page.
 def register(request):

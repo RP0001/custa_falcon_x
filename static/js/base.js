@@ -16,6 +16,8 @@ function initNavbar() {
     } else {
         idSegment = pathname.substring(7,pathname.length-1);
     }
+    if(idSegment==="my-account"||"order-history")
+        idSegment = "username";
     document.getElementById("nav-"+idSegment).className = "active";
 }
 

@@ -11,10 +11,10 @@
         <table class="striped">
             <thead>
             <tr>
-                <th style="text-align: center">Order Details</th>
-                <th>Order Type</th>
-                <th>Total Price</th>
-                <th style="text-align: center">Order Time</th>
+                <th class="center-align">Order Details</th>
+                <th class="center-align">Order Type</th>
+                <th class="center-align">Total Price</th>
+                <th class="center-align">Order Time</th>
             </tr>
             <tbody>
             {% for order_custas_queryset in order_custas_queryset_list %}
@@ -43,7 +43,7 @@
                     <td class="ordertype"
                         style="text-align: center">{{ order_custas_queryset.first.order.is_delivery }}</td>
                     <td class="price" style="text-align: center">{{ order_custas_queryset.first.order.total }}</td>
-                    <td>
+                    <td class="center-align">
                         {{ order_custas_queryset.first.order.time }}
                     </td>
 

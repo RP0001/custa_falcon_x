@@ -17,6 +17,9 @@ pre {
     line-height: 18.5714px;
 }
 
+.input-no-margin{
+    margin-bottom: 0px!important;
+}
 
 .hero-image {
     background-image: linear-gradient(rgba(255, 91, 55, 0), rgba(0, 0, 0, .75)), url("../assets/pasta_background_1.jpg");
@@ -175,4 +178,14 @@ img {
     width: auto;
     height: 100%;
     opacity: 0.8;
+}
+
+.dropdown{
+    background: inherit!important;
+    padding-top: 65px;
+    background-color: rgba(0, 0, 0, 0.5)!important;
+}
+.dropdown-content li > a{
+    color: whitesmoke!important;
+    font-size: 1rem;
 }

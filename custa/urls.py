@@ -10,5 +10,6 @@ urlpatterns = [
     url(r'^custamise/$', views.custamise, name='custamise'),
     url(r'^order/$', views.order, name='order'),
     url(r'^checkout/$', views.checkout),
-    url(r'^order-history/$', views.order_history),
+    url(r'^order-history/$', views.order_history, name='order-history'),
+    url(r'^my-account/$', views.my_account, name='my-account'),
 ]
