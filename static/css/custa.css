@@ -28,8 +28,7 @@ pre {
 }
 
 .footer-image {
-    background-image: linear-gradient(rgba(0, 0, 0, .75), rgba(0, 0, 0, 0)), url("../assets/linkedin_banner_image_2.png");
-    height: 25%;
+    background-image: linear-gradient(rgba(0, 0, 0, .75), rgba(0, 0, 0, 0)), url("../assets/foot_bg.png");
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -40,14 +39,32 @@ pre {
     text-align: center;
     font-size: 3rem;
     position: relative;
-    transform: translate(-50%, -50%);
     color: white;
     text-shadow: 3px 3px 2px #000, 0px 0px 0 #000, 0px 0px 0 #000, 0px 0px 0 #000;
 }
 
-.order-now{
+.collapsible-header {
+    background-color: #efa326 !important;
+    border-color: #fbaf26 !important;
+}
+
+.order-now {
     margin-top: 5%;
-    background-color: rgba(0,0,0,0.51);
+    background-color: rgba(0, 0, 0, 0.51);
+}
+
+.order-button {
+    width: 120px !important;
+    height: 120px !important;
+}
+
+.order-now-button-div {
+    padding-top: 17px;
+    font-size: 36px !important;
+}
+
+img.cardimg {
+    height: 300px;
 }
 
 .header img {
@@ -124,6 +141,12 @@ nav ul li.active {
     font-size: 1.5rem;
 }
 
+.card .card-title {
+    font-size: 35px !important;
+    padding-right: 15px !important;
+    padding-left: 10px !important;
+}
+
 table.highlight > tbody > tr:hover {
     background-color: #eeeaea;
 }
@@ -144,8 +167,11 @@ table.highlight > tbody > tr:hover {
 img {
     display: initial !important;
     width: 100%;
+    object-fit: cover !important;
+    -o-object-fit: cover !important;
 }
-.logo{
+
+.logo {
     width: auto;
     height: 100%;
     opacity: 0.8;

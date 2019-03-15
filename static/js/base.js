@@ -1,13 +1,17 @@
 $(document).ready(function(){
       $('.parallax').parallax();
+    if (!isAtHomePage()) {
+        initContainerHeight();
+    }
     });
 var pathname = window.location.pathname;
 M.AutoInit();
 initNavbar();
 initParallax();
+
 function initNavbar() {
     var idSegment = "";
-    if(pathname==="/custa/" || pathname==="/"){
+    if(isAtHomePage()){
         idSegment = "index";
     } else {
         idSegment = pathname.substring(7,pathname.length-1);
@@ -16,7 +20,23 @@ function initNavbar() {
 }
 
 function initParallax() {
-    if(pathname==="/custa/" || pathname==="/"){
-        $("#parallax-1").css("height", "550px");
+    if(isAtHomePage()){
+        $("#parallax-1").css("height", "500px");
     }
+}
+
+function isAtHomePage() {
+    if(pathname==="/custa/" || pathname==="/")
+        return true;
+    else
+        return false;
+}
+
+function initContainerHeight() {
+    var topHeight = $("#parallax-1").height();
+    var btmHeight = $("#footer").height();
+    var windowHeight = $(document).height();
+    var diff = windowHeight - topHeight - btmHeight;
+    if(diff>0)
+    $("#base-container").css("min-height", diff+"px");
 }
