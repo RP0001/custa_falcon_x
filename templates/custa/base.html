@@ -43,8 +43,13 @@
                 <ul id="nav-mobile" class="right hide-on-med-and-down">
                     <li id="nav-index"><a class="active" href="{% url 'index' %}">Index</a></li>
                     <li id="nav-contact"><a href="{% url 'contact' %}">Contact</a></li>
-                    <li id="nav-order"><a href="{% url 'order' %}">Order</a></li>
-                    <li id="nav-custamise"><a href="{% url 'custamise' %}">Custamise</a></li>
+                    {% if user.is_authenticated %}
+                        <li><a href="{% url 'order' %}">Order</a></li>
+                        <li><a href="{% url 'custamise' %}">CUSTAmise</a></li>
+                    {% else %}
+                        <li id="nav-order"><a href="javascript:void(0)" onclick="noticeLogin('{% url 'login' %}')">Order</a></li>
+                        <li id="nav-custamise"><a href="javascript:void(0)" onclick="noticeLogin('{% url 'login' %}')">CUSTAmise</a></li>
+                    {% endif %}
 
                     {% if user.is_authenticated %}
                         <li id="nav-username"><a class="dropdown-trigger" href="#!"
@@ -58,23 +63,28 @@
             </div>
         </nav>
     </div>
-<ul class="sidenav" id="mobile-demo">
-            <li><a class="active" href="{% url 'index' %}">Index</a></li>
-            <li><a href="{% url 'contact' %}">Contact</a></li>
+    <ul class="sidenav" id="mobile-demo">
+        <li><a class="active" href="{% url 'index' %}">Index</a></li>
+        <li><a href="{% url 'contact' %}">Contact</a></li>
+        {% if user.is_authenticated %}
             <li><a href="{% url 'order' %}">Order</a></li>
-            <li><a href="{% url 'custamise' %}">Custamise</a></li>
+            <li><a href="{% url 'custamise' %}">CUSTAmise</a></li>
+        {% else %}
+            <li><a href="javascript:void(0)" onclick="noticeLogin({% url 'login' %})">Order</a></li>
+            <li><a href="javascript:void(0)" onclick="noticeLogin({% url 'login' %})">CUSTAmise</a></li>
+        {% endif %}
 
-            {% if user.is_authenticated %}
-                <li><a href="{% url "my-account" %}">{{ request.user.username }}</a></li>
-                <li class="divider"></li>
-                <li><a href="{% url "logout" %}">Logout</a></li>
-            {% else %}
-                <li><a href="{% url 'login' %}">Login</a></li>
-                <li><a href="{% url 'register' %}">Register</a></li>
-            {% endif %}
-        </ul>
+        {% if user.is_authenticated %}
+            <li><a href="{% url "my-account" %}">{{ request.user.username }}</a></li>
+            <li class="divider"></li>
+            <li><a href="{% url "logout" %}">Logout</a></li>
+        {% else %}
+            <li><a href="{% url 'login' %}">Login</a></li>
+            <li><a href="{% url 'register' %}">Register</a></li>
+        {% endif %}
+    </ul>
 
-    <div class="container center-align"><span class="hero-text">Your gateway to custom pasta</span></div>
+    <div class="container center-align hide-on-med-and-down"><span class="hero-text">Your gateway to custom pasta</span></div>
     {% block parallax1 %}
 
     {% endblock %}

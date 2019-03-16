@@ -9,7 +9,6 @@
     <h2>CUSTAmise</h2>
     <form id="custa_form" method="POST" action="{% url 'custamise' %}">
         {% csrf_token %}
-        <div class="card-panel">
             <ul class="collapsible popout">
                 <li class="active">
                     <div class="collapsible-header" tabindex="0"><span class="medium-font">Base</span></div>
@@ -86,9 +85,9 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
                 </li>
             </ul>
-        </div>
         <div class="row">
             <div id="id_tags" style="padding-bottom: 10px"></div>
             <div class="input-field" id="#namecusta">

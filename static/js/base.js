@@ -17,7 +17,7 @@ function initNavbar() {
     } else {
         idSegment = pathname.substring(7, pathname.length - 1);
     }
-    if (idSegment === "my-account" || idSegment ==="order-history")
+    if (idSegment === "my-account" || idSegment === "order-history")
         idSegment = "username";
     document.getElementById("nav-" + idSegment).className = "active";
 }
@@ -42,4 +42,14 @@ function initContainerHeight() {
     var diff = windowHeight - topHeight - btmHeight;
     if (diff > 0)
         $("#base-container").css("min-height", diff + "px");
+}
+
+function noticeLogin(loginUrl) {
+    M.toast({
+        html: 'You need to login first! Direct you to login in 3 seconds...',
+        completeCallback: function () {
+            window.location.replace(loginUrl);
+        },
+        displayLength: 2200
+    },);
 }

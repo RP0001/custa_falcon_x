@@ -41,6 +41,9 @@ pre {
     line-height: 2.3rem!important;
 }
 
+.collapsible-body{
+    padding: 0rem!important;
+}
 
 .hero-image {
     background-image: linear-gradient(rgba(255, 91, 55, 0), rgba(0, 0, 0, .75)), url("../assets/pasta_background_1.jpg");

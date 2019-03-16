@@ -13,9 +13,15 @@
                 <h2 class="white-text hide-on-med-and-down">Go CUSTAmise your life!</h2>
             </div>
             <div class="col s5 m4 l2">
-                <a class="btn-floating waves-effect waves-light pulse order-button green darken-3" href="{% url "order" %}">
-                    <div class="order-now-button-div center-align">Order Now</div>
-                </a>
+                {% if user.is_authenticated %}
+                <a class="btn-floating waves-effect waves-light pulse order-button green darken-3"
+                   onclick="window.location.href('{% url 'order' %}')"><div class="order-now-button-div center-align">Order Now</div></a>
+                   {% else %}
+                       <a class="btn-floating waves-effect waves-light pulse order-button green darken-3"
+                   onclick="noticeLogin('{% url 'login' %}')"><div class="order-now-button-div center-align">Order Now</div></a>
+                   {% endif %}
+
+
             </div>
         </div>
     </div>
@@ -74,9 +80,10 @@
         <div class="section no-pad-bot">
             <div class="container">
                 <br>
-                    <span class="hero-text" style="font-size: 2.5rem">Eat Healthily - We promise to provide quality food with organic ingredients.</span>
-                </div>
+                <span class="hero-text" style="font-size: 2.5rem">Eat Healthily - We promise to provide quality food with organic ingredients.</span>
+            </div>
         </div>
-        <div class="parallax"><img src="{% static "assets/pasta_background_2.jpg" %}" alt="Unsplashed background img 2"></div>
+        <div class="parallax"><img src="{% static "assets/pasta_background_2.jpg" %}" alt="Unsplashed background img 2">
+        </div>
     </div>
 {% endblock %}
