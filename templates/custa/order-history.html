@@ -25,14 +25,16 @@
                             <thead>
                             <tr>
                                 <th>Custa Name</th>
-                                <th style="text-align: right">Unit Price</th>
+                                <th class="right-align">Quantity</th>
+                                <th class="right-align">Unit Price</th>
                             </tr>
                             </thead>
                             {% for order_custa in order_custas_queryset %}
                                 <tbody>
                                 <tr style="border-bottom: 1px solid #d0d0d0">
                                     <td>{{ order_custa.custa }}</td>
-                                    <td style="text-align: right"><span
+                                    <td class="right-align">{{ order_custa.quantity }}</td>
+                                    <td class="right-align"><span
                                             class="price">{{ order_custa.custa.price }}</span></td>
                                 </tr>
                                 </tbody>

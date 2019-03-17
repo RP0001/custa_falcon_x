@@ -45,6 +45,10 @@ pre {
     padding: 0rem!important;
 }
 
+.right-align{
+    text-align: right!important;
+}
+
 .hero-image {
     background-image: linear-gradient(rgba(255, 91, 55, 0), rgba(0, 0, 0, .75)), url("../assets/pasta_background_1.jpg");
     height: 20%;
