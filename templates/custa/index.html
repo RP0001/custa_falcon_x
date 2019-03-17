@@ -15,7 +15,7 @@
             <div class="col s5 m4 l2">
                 {% if user.is_authenticated %}
                 <a class="btn-floating waves-effect waves-light pulse order-button green darken-3"
-                   onclick="window.location.href('{% url 'order' %}')"><div class="order-now-button-div center-align">Order Now</div></a>
+                   onclick="window.location.replace('{% url 'order' %}')"><div class="order-now-button-div center-align">Order Now</div></a>
                    {% else %}
                        <a class="btn-floating waves-effect waves-light pulse order-button green darken-3"
                    onclick="noticeLogin('{% url 'login' %}')"><div class="order-now-button-div center-align">Order Now</div></a>
