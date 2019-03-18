@@ -1,3 +1,10 @@
+/*
+CSS has been built intuitively to offer the best user experience and flawless fluidity.
+Mobile adaptation has also been performed. Some elements disappear when window size becomes smaller.
+
+Instead of bootstrap, materialize has been used as a responsive framework due to its ease of use, adaptability and
+professional look. Note that this css is compiled through scss.
+*/
 
 blockquote {
     font-family: "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Geneva, Verdana, sans-serif;
@@ -38,15 +45,15 @@ pre {
     margin-bottom: 15px;
     font-size: 2.3rem !important;
     padding-top: 25px !important;
-    line-height: 2.3rem!important;
+    line-height: 2.3rem !important;
 }
 
-.collapsible-body{
-    padding: 0rem!important;
+.collapsible-body {
+    padding: 0rem !important;
 }
 
-.right-align{
-    text-align: right!important;
+.right-align {
+    text-align: right !important;
 }
 
 .hero-image {
@@ -187,7 +194,7 @@ table.highlight > tbody > tr:hover {
 }
 
 .medium-font {
-    font-size: 1.5rem!important;
+    font-size: 1.5rem !important;
 }
 
 .collection-scrolled {
@@ -222,14 +229,15 @@ img {
 /* Always set the map height explicitly to define the size of the div
              * element that contains the map. */
 #map {
-    width: 100%!important;
+    width: 100% !important;
 
 }
-.map-container{
+
+.map-container {
     width: 100%;
-  height: 0;
-  padding-bottom: 60%;
-  overflow: hidden;
+    height: 0;
+    padding-bottom: 60%;
+    overflow: hidden;
 }
 
 

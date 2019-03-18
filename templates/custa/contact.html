@@ -7,9 +7,8 @@
 
 <html>
 {% block body_block %}
-
     <div class="row">
-        <div class="col s12 m5">
+        <div class="col s12 m12 l5">
             <div class="card-panel hoverable">
                 <h3>Contact Details</h3>
                 <span class="medium-font">Email: contact@custa.com<br>
@@ -29,24 +28,29 @@
                 <div class="center-align"><span class="big-font">Require new ingeredients?</span></div>
                 <br>
                 <div class="center-align">
+                    <!--trigger the modal-->
                     <a class="btn-large waves-effect modal-trigger" href="#modal1">Submit Requirements</a>
                 </div>
             </div>
         </div>
 
-        <div class="col s12 m7">
+        <div class="col s12 m12 l7">
             <div class="card-panel hoverable">
                 <h5>Loation</h5>
+                <!--google map added here-->
                 <div id="map" style="float: initial">
                 </div>
             </div>
         </div>
     </div>
+    <!--the modal of adding user requirement-->
     <div id="modal1" class="modal">
         <div class="modal-content">
             <h4>Submit Your Requirement</h4>
             {% if user.is_authenticated%}
+{#                if user is logged in, show the form of adding requirements#}
                 <form id="req_form" method="post" action="{% url "contact" %}">
+{#                csrf token is a must when having post request#}
                 {% csrf_token %}
                 <div class="input-field">
                     <i class="material-icons prefix">wb_incandescent</i>
@@ -55,6 +59,7 @@
                 </div>
                 <div class="center-align"><button class="btn-large waves-effect">Submit</button> </div>
             </form>
+{#                if user is not logged in, show content below#}
                 {% else %}
                 <i class="material-icons" style="font-size: 10rem; color: red;">sms_failed</i>
                 <h5>Sorry, you need to <a class="btn-flat medium-font" href="{% url "login" %}">login</a> first.</h5>

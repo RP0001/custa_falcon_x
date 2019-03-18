@@ -2,9 +2,11 @@ from django.template.defaultfilters import slugify
 from django.db import models
 from django.contrib.auth.models import User
 
+# max field length is homogeneous for ease
 char_field_max_length = 128
 
 
+# ingredient specific models are created one after the other (ingredients are divided into base, sauce and top)
 class Sauce(models.Model):
     # id primary key is by default
     name = models.CharField(max_length=char_field_max_length, unique=True)  # Unique sauce.
@@ -32,6 +34,8 @@ class Base(models.Model):
         return self.name
 
 
+# the custa model references the three ingredient
+# models (tops, bases, sauces) and user model - hence the use of foreign keys
 class Custa(models.Model):
     # id primary key is by default
     name = models.CharField(max_length=char_field_max_length, unique=False)
@@ -57,6 +61,7 @@ class UserProfile(models.Model):
         return self.user.username
 
 
+# model corresponding to every order
 class Order(models.Model):
     # id primary key is by default
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=False)
@@ -65,6 +70,9 @@ class Order(models.Model):
     total = models.IntegerField(default=0, null=False)
 
 
+# OrderCusta is an intermediary model that is used to handle
+# database many-to-many relationships which enables every
+# order to have multiple custas
 class OrderCusta(models.Model):
     # id primary key is by default
     order = models.ForeignKey(Order, on_delete=models.CASCADE, unique=False)
@@ -72,6 +80,7 @@ class OrderCusta(models.Model):
     quantity = models.IntegerField(null=False)  # Must provide a quantity
 
 
+# model corresponding to requirement/user request to company
 class Requirement(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=False)
     description = models.CharField(max_length=char_field_max_length, null=False, unique=False)

@@ -1,5 +1,7 @@
-M.AutoInit();
-showPrice();
+M.AutoInit();       //auto initialisation of Materialize css
+showPrice();        //init the price in pounds instead of pence
+
+//calculate the total price of the custa created
 function calcTotal() {
     var selected_base_id = $("input[name='base']:checked").val();
     var basePrice;
@@ -28,14 +30,16 @@ function calcTotal() {
     } else
         topPrice = 0;
     var total = basePrice + saucePrice + topPrice;
-    $("#id_price").val(total * 100);
-    $("#price_label").html("Price: £ " + total.toFixed(2));
+    $("#id_price").val(total * 100);        //transfer into pence
+    $("#price_label").html("Price: £ " + total.toFixed(2));     //show the price in pounds
 }
 
+//used for open the section of collapsible by given inde
 function openSection(index) {
     $('.collapsible').collapsible('open', index);
 }
 
+//function bonded to the "next" button, which would direct user to the next ingredient or right to the naming section
 function nextSection(index) {
     var checked = false;
     var type;
@@ -60,6 +64,8 @@ function nextSection(index) {
         }
     }
 }
+
+//init the price in pounds instead of pence
 function showPrice() {
     var price_components = document.getElementsByClassName('price');
     for(let c of price_components){

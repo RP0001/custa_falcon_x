@@ -5,6 +5,7 @@
     CUSTAmise
 {% endblock %}
 
+{#custamise contains three collapsible elements, each corresponding to a specific ingredient (base, sauce, top) as well as an input field for naming the custa#}
 {% block body_block %}
     <h2>CUSTAmise</h2>
     <form id="custa_form" method="POST" action="{% url 'custamise' %}">
@@ -102,6 +103,7 @@
         </div>
     </form>
     <script src="{% static "js/custamise.js" %}"></script>
+    <!--inevitable inline javascript due to django setup - since javascript file can't be rendered as a template-->
     <script>
         var baseList = {{ bases_list|safe }};
         var sauceList = {{ sauces_list|safe }};

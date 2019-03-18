@@ -1,6 +1,7 @@
 from django.conf.urls import url
 from custa import views
 
+# all urls in the web application are present here (similarly to an address book)
 urlpatterns = [
     url(r'^$', views.about, name='index'),
     url(r'^register/$', views.register, name='register'),

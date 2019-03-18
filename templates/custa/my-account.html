@@ -5,7 +5,9 @@
     My Account
 {% endblock %}
 
+
 {% block body_block %}
+{#    necessary csrf token applied when handling post request#}
     {% csrf_token %}
     <h1>My Account</h1>
     <div class="row">
@@ -76,6 +78,8 @@
 
         </div>
     </div>
+{#    necessary js importing for csrf safty check#}
     <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
+{#    separate javascript file introduced#}
     <script src="{% static "js/my-account.js" %}"></script>
 {% endblock %}

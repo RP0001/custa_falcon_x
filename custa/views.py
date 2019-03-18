@@ -22,66 +22,83 @@ def about(request):
 
 
 @login_required
-# Custamise page.
+# custamise page is used create own custa from base, sauce and top ingredients
 def custamise(request):
     user = request.user
     bases = Base.objects.all()
     sauces = Sauce.objects.all()
     tops = Top.objects.all()
+    # convert django QuerySet to List so that it can be used in the django templates
     bases_list = list(bases.values())
     sauces_list = list(sauces.values())
     tops_list = list(tops.values())
+    # add different variables to the context dictionary
     context_dict['bases'] = bases
     context_dict['bases_list'] = bases_list
     context_dict['sauces'] = sauces
     context_dict['sauces_list'] = sauces_list
     context_dict['tops'] = tops
     context_dict['tops_list'] = tops_list
+    # custa form is attached to post request
     if request.method == "POST":
         custa_form = CustaForm(data=request.POST)
         context_dict['custa_form'] = custa_form
         if custa_form.is_valid():
+            # commit=false here because the form cannot provide all info relevant to model
             custa = custa_form.save(commit=False)
             custa.user = user
             custa.save()
+            # redirect your page to order after creating a new custa
             return HttpResponseRedirect(reverse('order'))
     return render(request, 'custa/custamise.html', context_dict)
 
 
 @login_required
+# this is an amalgamation of custas used to generate an order the order may be composed of preset
+# custas as well as user defined custas
 def order(request):
     user = request.user
+    # get custas whose user_id=0, which are preset custas
     precustas = Custa.objects.filter(user=0)
+    # get user's customised custa
     usercustas = Custa.objects.filter(user=user)
+    # use chain() to connect the two QuerySets and parse it into list
     custas_list = list(chain(precustas, usercustas))
     context_dict['custa_list'] = custas_list
     return render(request, 'custa/order.html', context_dict)
 
 
 @login_required
+# customised checkout method does not render a page it uses json representation of object to get
+# order information and therefore create order
 def checkout(request):
+    # get the json from the request body
     data = json.loads(request.body)
+    # get the info of an order
     id_array = data.get('idArray')
     quantity_array = data.get('quantityArray')
     is_delivery_received = data.get('isDelivery')
+    # the total price needs to be multiplied by 100 because it is saved as integer in the database
     total_received = data.get('total') * 100
+    # create order
     new_order = Order(user=request.user, is_delivery=is_delivery_received, total=total_received)
     new_order.save()
+    # for each custa inside the order, create a responding OrderCusta object (a row in database)
     for i in range(0, len(id_array)):
         OrderCusta.objects.create(quantity=quantity_array[i], custa_id=id_array[i], order=new_order)
     return HttpResponse(json.dumps({"message": "success"}))
 
 
 @login_required
+# shows the order history of the user in a separate page of the web application
+# Nested dictionaries are used to simulate representations similar to SQL's "where in..." nested query
 def order_history(request):
     orders = Order.objects.filter(user=request.user)
-    user_id = str(request.user.id)
     order_ids = orders.values("id")
     order_custas = OrderCusta.objects.filter(order_id__in=order_ids)
     order_custas_queryset_list = list();
     for o in orders:
         order_custas_queryset_list.append(OrderCusta.objects.filter(order=o))
-    print(order_custas)
     context_dict['orders'] = orders
     context_dict['order_custas'] = order_custas
     context_dict['range_of_orders'] = range(0, len(orders))
@@ -90,12 +107,15 @@ def order_history(request):
     return render(request, "custa/order-history.html", context_dict)
 
 
+@login_required
+# my_account page containing user information
 def my_account(request):
     userprofile = UserProfile.objects.filter(user=request.user)
     context_dict['userprofile'] = userprofile
     return render(request, "custa/my-account.html", context_dict)
 
 
+# customised method used to update user personal information
 def edit_profile(request):
     data = json.loads(request.body)
     userprofile = UserProfile.objects.get(user=request.user)
@@ -122,7 +142,7 @@ def contact(request):
     return render(request, 'custa/contact.html', context_dict)
 
 
-# Register page.
+# Register page, also contains a form for submitting user request to the company.
 def register(request):
     registered = False
     if request.method == 'POST':
@@ -167,14 +187,8 @@ def user_login(request):
         return render(request, 'custa/login.html', {})
 
 
-# Text when logged in.
-@login_required
-def restricted(request):
-    return HttpResponse("Since you're logged in, you can see this.")
-
-
 # Logout logic.
 @login_required
 def user_logout(request):
     logout(request)
-    return HttpResponseRedirect(reverse('about'))
+    return HttpResponseRedirect(reverse('index'))

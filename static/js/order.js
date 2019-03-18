@@ -1,4 +1,5 @@
 M.AutoInit();
+//used for the safety check of csrf token
 var csrftoken = Cookies.get('csrftoken');
 
 function csrfSafeMethod(method) {
@@ -13,19 +14,26 @@ $.ajaxSetup({
         }
     }
 });
+
+//global variables...
 var idArr;
 var qttArr;
 var isDelivery;
 var total = 0;
 
+// helper function to update all information including total price, list showing in the cart panel.
+// should be called whenever user make changes to the order details.
 function update() {
     total = 0;
     var quantity_inputs = document.getElementsByClassName('medium-font');
+    //remove all children first
     $("#total_in_confirm_page").children().remove();
     idArr = [];
     qttArr = [];
+    //for each input of quantity
     for (var i = 0; i < quantity_inputs.length; i++) {
         var curr = quantity_inputs[i];
+        // if current input's quantity is not 0, add it to cart
         if (curr.textContent !== '0') {
             var custa_index = curr.id.substring(9, (curr.id.length - 9));
             var quantity = curr.textContent;
@@ -55,6 +63,7 @@ function update() {
         var trEle_cloned = trEle.cloneNode(true);
         $("#order_details").append(trEle_cloned);
     }
+    // if it's delivery order, add 2 pounds for delivery fee
     if (isDelivery && total !== 0)
         total += 2;
     var totalStr = "Total: £" + total.toFixed(2);
@@ -64,6 +73,7 @@ function update() {
     var text_total = document.createElement("p");
     text_total.className = "big-font";
     text_total.innerText = totalStr;
+    // add everything to the html DOM
     if (isDelivery) {
         $("#total_in_confirm_page").append(text_deliveryfee);
     }
@@ -77,23 +87,27 @@ function update() {
     }
 }
 
+// function used to handle checkout, using ajax to pass data to the back-end
 function checkout() {
-    update();
-    var obj = {};
+    update();       //call update() first to make sure everything is up-to-date
+    var obj = {};   //create object for transmitting
     obj.idArray = idArr;
     obj.quantityArray = qttArr;
     obj.isDelivery = isDelivery;
     obj.total = total;
     var jsonStr = JSON.stringify(obj);
-    console.log(jsonStr);
+    //checkout action is only approved when there's item in the cart
     if (total !== 0) {
         $.ajax({
             type: "post",
             url: '../checkout/',
             data: jsonStr,
             dataType: 'json',
+            //if success
             success: function () {
+                // remove everything in the modal first
                 $("#modal1_content").children().remove();
+                //codes below shows actions of adding DOMs to modal which show success information
                 var success_container = document.createElement("div");
                 success_container.className = "card-panel";
                 var success_info = document.createElement("div");
@@ -109,6 +123,7 @@ function checkout() {
                 var back_button = document.createElement("a");
                 back_button.className = "btn-large waves-effect";
                 back_button.innerText = "OK";
+                //redirect back to index
                 back_button.href = "../";
                 $("#modal_footer").children().remove();
                 $("#modal_footer").append(back_button);
@@ -128,6 +143,7 @@ function syncSwitch(switchIndex) {
     }
 }
 
+//method to add a corresponding custa
 function increase(textID) {
     var ele = $("#" + textID);
     var ele_num = ele.text();
@@ -135,9 +151,11 @@ function increase(textID) {
     update();
 }
 
+//method to delete a corresponding custa
 function decrease(textID) {
     var ele = $("#" + textID);
     var ele_num = ele.text();
+    // custa number cannot be negative
     if (ele_num > 0) {
         ele.text(ele_num * 1 - 1);
     }

@@ -1,5 +1,5 @@
+//codes below are used for safety check of the csrf token
 var csrftoken = Cookies.get('csrftoken');
-
 
 function csrfSafeMethod(method) {
     // these HTTP methods do not require CSRF protection
@@ -14,7 +14,7 @@ $.ajaxSetup({
     }
 });
 
-
+// enable inputs and save button
 function edit() {
     var inputs = document.getElementsByTagName("input");
     for (let i of inputs) {
@@ -25,6 +25,7 @@ function edit() {
     $("#save-btn").removeAttr('disabled');
 }
 
+//submit the data in the inputs to the backend
 function save() {
     var obj = {};
     obj.username = $("#username").val();
@@ -47,6 +48,7 @@ function save() {
             url: '../edit-profile/',
             data: jsonStr,
             dataType: 'json',
+            //if ajax succeed, show success info
             success: function () {
                 M.toast({html: 'User details saved!'});
                 for (i of inputs)
@@ -57,6 +59,7 @@ function save() {
             }
         });
     } else {
+        //check the data integrity
         M.toast({html: 'Please finish all fields!'});
     }
 }

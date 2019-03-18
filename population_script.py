@@ -1,10 +1,9 @@
 import os
+import django
 from django.db import connection
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE',
                       'custa_falcon_x.settings')
-
-import django
 
 django.setup()
 
@@ -12,6 +11,7 @@ django.setup()
 from custa.models import Base, Sauce, Top, Custa
 
 
+# populate all preset bases, sauces and tops as these will not change for the web app
 def populate():
     bases = [
         {"name": "Fusilli (Wheat, Egg), contains ", "price": 100},
@@ -89,8 +89,11 @@ def populate():
     for t in tops:
         add_top(t["name"], t["price"])
 
+    # create user 0 first for pre-set custas
     my_custom_sql()
 
+    # preset custas are created here, this is enough since other custas are created by user and
+    # therefore are user-private
     custas = [
         {"name": "PRESET - Gluten Free Mac&Cheese", "price": 300, "base_id": 10, "sauce_id": 14, "top_id": 3},
         {"name": "PRESET - Halal / Kosher Chicken Tikka Masala", "price": 400, "base_id": 14, "sauce_id": 15,
@@ -104,6 +107,7 @@ def populate():
         add_custa(c["name"], c["price"], c["base_id"], c["sauce_id"], c["top_id"], 0)
 
 
+# customised method for adding all ingredient details
 def add_base(base, price=0):
     b = Base.objects.get_or_create(name=base, price=price)[0]
     b.save()
@@ -122,6 +126,8 @@ def add_top(top, price=0):
     return t
 
 
+# customised method generating DDL SQL necessary for creating user 0
+# user 0 is an admin user with sole responsibility of owning the preset custas in the web app
 def my_custom_sql():
     with connection.cursor() as cursor:
         cursor.execute(
@@ -141,6 +147,7 @@ def my_custom_sql():
         )
 
 
+# customised method for adding all custa details
 def add_custa(name, price, base_id, sauce_id, top_id, user_id=0):
     c = Custa.objects.get_or_create(name=name, price=price, base_id=base_id, sauce_id=sauce_id, top_id=top_id,
                                     user_id=user_id)[0]
@@ -148,6 +155,7 @@ def add_custa(name, price, base_id, sauce_id, top_id, user_id=0):
     return c
 
 
+# main method
 if __name__ == '__main__':
     print("Starting Custa population script...")
     populate()
