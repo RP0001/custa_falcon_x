@@ -86,6 +86,16 @@ function update() {
         $("#goto_checkout_mobile").removeAttr('disabled');
     }
 }
+var panelVisible = true;
+function hideOrShow(){
+	if(panelVisible){
+		$("#cart_panel").hide();
+		panelVisible = false;
+	}else {
+		$("#cart_panel").show();
+		panelVisible = true;
+	}
+}
 
 // function used to handle checkout, using ajax to pass data to the back-end
 function checkout() {

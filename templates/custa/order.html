@@ -80,7 +80,7 @@
     </div>
     <div class="col hide-on-small-only m3 xl3 offset-xl1">
         <div class="toc-wrapper pinned" style="top: 20%;right: 0%">
-            <div class="card-panel hoverable hide-on-med-and-down" style="background-color: #f1f1f1; zoom: 78%">
+            <div class="card-panel hoverable hide-on-med-and-down cart-panel" id="cart_panel">
                 <div class="switch center-align" style="zoom: 145%">
                     <label style="font-size: 1.5rem">
                         Pickup
@@ -108,6 +108,12 @@
                        disabled>Go To Checkout</a>
                 </div>
             </div>
+			<div class="fixed-action-btn">
+			<a class="btn-large waves-effect show-on-large-only hide-on-med-and-down" style="bottom: 20%" onclick="hideOrShow()">
+				<i class="large material-icons">replay</i>
+				Show/Hide
+			</a>
+		</div>
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>

@@ -65,6 +65,11 @@ pre {
     position: relative;
 }
 
+.cart-panel{
+	background-color: #f1f1f1; 
+	zoom: 78%;
+}
+
 .footer-image {
     background-image: linear-gradient(rgba(0, 0, 0, .75), rgba(0, 0, 0, 0)), url("../assets/foot_bg.png");
     background-position: center;
