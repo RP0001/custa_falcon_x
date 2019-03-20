@@ -29,7 +29,7 @@
                             </ul>
                             <div class="row">
                                 <div style="padding-top: 17px; margin-left: 46%">
-                                    <button class="btn-large waves-effect waves-light" type="button"
+                                    <button class="btn-large waves-effect waves-light" id="next1" type="button"
                                             onclick="nextSection(0)">Next
                                     </button>
                                 </div>
@@ -54,7 +54,7 @@
                             </ul>
                             <div class="row">
                                 <div style="padding-top: 17px; margin-left: 46%">
-                                    <button class="btn-large waves-effect waves-light" type="button"
+                                    <button class="btn-large waves-effect waves-light" id="next2" type="button"
                                             onclick="nextSection(1)">Next
                                     </button>
                                 </div>
@@ -99,7 +99,7 @@
                 <input style="display: none" type="number" name="price" required id="id_price" readonly>
                 <h5 id="price_label">Price: £ 0.00</h5>
             </div>
-            <button class="btn-large waves-effect waves-light">create</button>
+            <button class="btn-large waves-effect waves-light" id="create">create</button>
         </div>
     </form>
     <script src="{% static "js/custamise.js" %}"></script>

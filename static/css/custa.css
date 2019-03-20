@@ -66,8 +66,8 @@ pre {
 }
 
 .cart-panel{
-	background-color: #f1f1f1; 
-	zoom: 78%;
+	background-color: #f1f1f1!important; 
+	zoom: 78%!important;
 }
 
 .footer-image {
